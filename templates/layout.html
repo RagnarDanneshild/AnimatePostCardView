@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'content/bootstrap.min.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'content/style.css' %}">
+    <script src="{% static 'scripts/jquery-1.10.2.min.js' %}"></script>
+    <script src="{% static 'scripts/bootstrap.min.js' %}"></script>
+</head>
+
+<body>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="/" class="navbar-brand">PostCard Editor</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="{% url 'home' %}">Home</a></li>
+
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+        <li><span class="navbar-brand">Hello {{ user.username }}!</span></li>
+        <li><a href="#">Href</a></li>
+    </ul>
+            </div>
+        </div>
+    </div>
+{% block content %}{% endblock %}
+
+{% block scripts %}{% endblock %}
+</body>
