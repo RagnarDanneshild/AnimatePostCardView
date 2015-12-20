@@ -6,12 +6,14 @@
     {% load staticfiles %}
     <link rel="stylesheet" type="text/css" href="{% static 'content/bootstrap.min.css'%}">
     <link rel="stylesheet" type="text/css" href="{% static 'content/style.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
     <script src="{% static 'scripts/jquery-1.10.2.min.js' %}"></script>
     <script src="{% static 'scripts/bootstrap.min.js' %}"></script>
 </head>
 
 <body>
-<body>
+
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -28,13 +30,53 @@
 
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
+                    {%  if user.is_authenticated %}
         <li><span class="navbar-brand">Hello {{ user.username }}!</span></li>
-        <li><a href="#">Href</a></li>
-    </ul>
+        <li><a href="{% url 'logout' %}">Logout</a></li>
+                    {% else %}
+    <li>
+      <a href=" ">
+        <i class="fa fa-user fa-2x"></i>
+      </a>
+    </li>
+    <li>
+      <a href="{% url 'social:begin' 'vk-oauth2' %}">
+        <i class="fa fa-vk fa-2x"></i>
+      </a>
+    </li>
+
+    <li>
+      <a href="{% url 'social:begin' 'facebook' %}">
+        <i class="fa fa-facebook fa-2x"></i>
+      </a>
+    </li>
+                {% endif %}
+                </ul>
             </div>
         </div>
     </div>
+
+
 {% block content %}{% endblock %}
 
 {% block scripts %}{% endblock %}
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '1521201841513566',
+      xfbml      : true,
+      version    : 'v2.5'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
 </body>
+
+<div ></div>

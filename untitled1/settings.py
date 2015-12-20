@@ -86,10 +86,10 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 )
 AUTHENTICATION_BACKENDS = (
- 'social.backends.twitter.TwitterOAuth',
+    'social.backends.twitter.TwitterOAuth',
     'social.backends.facebook.Facebook2OAuth2',
-    'social.backends.vk.VKAppOAuth2',
-
+    'social.backends.vk.VKOAuth2',
+    'social.backends.vk.VKontakteOpenAPI',
     'django.contrib.auth.backends.ModelBackend',
 
 
@@ -119,16 +119,31 @@ USE_L10N = True
 
 USE_TZ = True
 
+PIPELINE = (
+  'social.pipeline.social_auth.social_details',
+  'social.pipeline.social_auth.social_uid',
+  'social.pipeline.social_auth.auth_allowed',
+  'social.pipeline.social_auth.social_user',
+  'social.pipeline.user.get_username',
+
+  'social.pipeline.social_auth.associate_by_email',
+  'social.pipeline.user.create_user',
+  'social.pipeline.social_auth.associate_user',
+  'social.pipeline.social_auth.load_extra_data',
+  'social.pipeline.user.user_details'
+)
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
-FACEBOOK_APP_ID = '1521201841513566'
-FACEBOOK_API_SECRET = 'c3c6b19c0e8bef5b3a6784dda670303e'
-TWITTER_CONSUMER_KEY = 'hkTzniC1T1YMAi3wZ8Gfn7idg '
-TWITTER_CONSUMER_SECRET = 'xeOsgLhajgjWKveiTdxVp5NfcTyA1SR44vDLqHcWly9ShRk3Rx'
-VK_APP_ID = '5078864'
-VKONTAKTE_APP_ID = VK_APP_ID
-VK_API_SECRET = '55SlhMHd9soFODPXsn1d'
-VKONTAKTE_APP_SECRET = VK_API_SECRET
+SOCIAL_AUTH_FACEBOOK_KEY  = '1521201841513566'
+SOCIAL_AUTH_FACEBOOK_SECRET  = 'c3c6b19c0e8bef5b3a6784dda670303e'
+SOCIAL_AUTH_TWITTER_KEY = 'hkTzniC1T1YMAi3wZ8Gfn7idg '
+SOCIAL_AUTH_TWITTER_SECRET = 'xeOsgLhajgjWKveiTdxVp5NfcTyA1SR44vDLqHcWly9ShRk3Rx'
+SOCIAL_AUTH_VK_OAUTH2_KEY = '5194765'
+SOCIAL_AUTH_VK_OPENAPI_ID = '5078864'
+SOCIAL_AUTH_VK_OAUTH2_SECRET = 'DxWXoBrxdBQlGvBnTg86'
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'
+SOCIAL_AUTH_LOGIN_URL = '/'
+

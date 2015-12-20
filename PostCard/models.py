@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+
 # Create your models here.
 
 
@@ -14,6 +16,8 @@ class UserInfo(models.Model):
     last_name = models.CharField(max_length=15)
     registration_data = models.DateTimeField(auto_now_add=True)
     rate = models.IntegerField(default=0)
+
+
 
 
 class Template(models.Model):
@@ -49,3 +53,8 @@ class UserAchievement(models.Model):
     badge_url = models.URLField()
 
 
+def create_user_profile(sender, instance, created, **kwargs):
+        if created:
+            profile=UserInfo(user=instance)
+            profile.save()
+post_save.connect(create_user_profile, sender=User)
