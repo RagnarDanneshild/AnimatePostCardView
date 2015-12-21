@@ -39,6 +39,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'PostCard',
     'social.apps.django_app.default',
+    'registration',
+    'bootstrap3',
 
 )
 
@@ -147,3 +149,13 @@ SOCIAL_AUTH_VK_OAUTH2_SECRET = 'DxWXoBrxdBQlGvBnTg86'
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'
 SOCIAL_AUTH_LOGIN_URL = '/'
 
+EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.mail.ru'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = "testsmtpserveritra@mail.ru"
+EMAIL_HOST_PASSWORD = "1234zxcv"
+EMAIL_USE_TLS = True
+SERVER_EMAIL = EMAIL_HOST_USER
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+ACCOUNT_ACTIVATION_DAYS = 3
+LOGIN_REDIRECT_URL = '/'

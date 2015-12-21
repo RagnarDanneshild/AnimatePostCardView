@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load bootstrap3 %}
+
+
+{% block title %}{% trans "Account Activated" %}{% endblock %}
+
+{% block content %}
+<div class="container"> 
+  <h1>Success!</h1>
+
+<p>
+    {% trans "Your account is now activated." %}
+    {% if not user.is_authenticated %}
+    {% trans "You can log in." %}
+    {% endif %}
+<p><a href="{% url 'django.contrib.auth.views.login' %}" 
+		class="btn btn-success"
+        role="button">Sign in</a>
+  </p>
+
+</p>
+{% endblock %}
+
+
