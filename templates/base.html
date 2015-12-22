@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'content/bootstrap.min.css'%}">
     <link rel="stylesheet" type="text/css" href="{% static 'content/style.css' %}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-
+      <script src="{% static 'UserProfile.js' %}"></script>
     <script src="{% static 'scripts/jquery-1.10.2.min.js' %}"></script>
     <script src="{% static 'scripts/bootstrap.min.js' %}"></script>
 </head>
@@ -31,7 +31,7 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     {%  if user.is_authenticated %}
-        <li><span class="navbar-brand">Hello {{ user.username }}!</span></li>
+        <li><a href="{% url 'profile' %}" class="navbar-brand">Hello {{ user.username }}!</a></li>
         <li><a href="{% url 'logout' %}">Logout</a></li>
                     {% else %}
     <li>

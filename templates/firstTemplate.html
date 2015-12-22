@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{%  block content %}
+<div class="template"  id="firstTemplate">
+<input type="text" value="Header Text" placeholder="Please Enter Header Text"/>
+<input type="text" value="Lower Text" placeholder="Please Enter Lower Text"/>
+    <input type='file'  id="inputFile" onchange="readURL(this);" accept="image/*"/>
+<span> Show Image</span>
+
+</div>
+{% endblock %}
