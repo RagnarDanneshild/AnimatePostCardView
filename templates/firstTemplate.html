@@ -1,10 +1,81 @@
 {% extends 'base.html' %}
 {%  block content %}
-<div class="template"  id="firstTemplate">
+      <div class="btn-pref btn-group  btn-group-lg" role="group" aria-label="...">
+        <div class="btn-group" role="group">
+            <button type="button" id="stars" class="btn btn-primary" href="#tab1" data-toggle="tab"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                <div class="hidden-xs">FirstTemplate</div>
+            </button>
+        </div>
+        <div class="btn-group" role="group">
+            <button type="button" id="favorites" class="btn btn-default" href="#tab2" data-toggle="tab"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
+                <div class="hidden-xs">SecondTemplate</div>
+            </button>
+        </div>
+        <div class="btn-group" role="group">
+            <button type="button" id="following" class="btn btn-default" href="#tab3" data-toggle="tab"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                <div class="hidden-xs">ThirdTemplate</div>
+            </button>
+        </div>
+    </div>
+
+        <div class="well">
+      <div class="tab-content">
+        <div class="tab-pane fade in active" id="tab1">
+          <h3>This is tab 1</h3>
+        </div>
+        <div class="tab-pane fade in" id="tab2">
+         <div class="template"  id="firstTemplate">
 <input type="text" value="Header Text" placeholder="Please Enter Header Text"/>
 <input type="text" value="Lower Text" placeholder="Please Enter Lower Text"/>
     <input type='file'  id="inputFile" onchange="readURL(this);" accept="image/*"/>
 <span> Show Image</span>
 
 </div>
+        </div>
+        <div class="tab-pane fade in" id="tab3">
+          <h3>This is tab 3</h3>
+        </div>
+      </div>
+    </div>
+
+
+    <div class='container'>
+    <canvas width="620" height="430" ></canvas>
+<canvas width="620" height="430" id="second" ></canvas>
+    </div>
+
+    <div id="disqus_thread"></div>
+{% endblock %}
+
+{% block scripts %}
+
+<script type="text/javascript">
+
+        var ctx = document.querySelector("canvas").getContext("2d"),
+    dashLen = 80, dashOffset = dashLen, speed = 5,
+    txt = "Hello  everyone", x = 20, i = 0;
+
+ctx.font = "30px Comic Sans MS, cursive, TSCu_Comic, sans-serif";
+ctx.lineWidth = 5; ctx.lineJoin = "round"; ctx.globalAlpha = 2/3;
+ctx.strokeStyle = ctx.fillStyle = "#1f2f90";
+
+(function loop() {
+  ctx.clearRect(x, 0, 60, 150);
+  ctx.setLineDash([dashLen - dashOffset, dashOffset - speed]); // create a long dash mask
+  dashOffset -= speed;                                         // reduce dash length
+  ctx.strokeText(txt[i], x, 90);                               // stroke letter
+
+  if (dashOffset > 0) requestAnimationFrame(loop);             // animate
+  else {
+    ctx.fillText(txt[i], x, 90);                               // fill final letter
+    dashOffset = dashLen;                                      // prep next char
+    x += ctx.measureText(txt[i++]).width + ctx.lineWidth * Math.random();
+    ctx.setTransform(1, 0, 0, 1, 0, 3 * Math.random());        // random y-delta
+    ctx.rotate(Math.random() * 0.005);                         // random rotation
+    if (i < txt.length) requestAnimationFrame(loop);
+  }
+})();
+    </script>
+
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
 {% endblock %}

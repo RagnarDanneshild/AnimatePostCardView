@@ -7,9 +7,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'content/bootstrap.min.css'%}">
     <link rel="stylesheet" type="text/css" href="{% static 'content/style.css' %}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-      <script src="{% static 'UserProfile.js' %}"></script>
-    <script src="{% static 'scripts/jquery-1.10.2.min.js' %}"></script>
-    <script src="{% static 'scripts/bootstrap.min.js' %}"></script>
+
 </head>
 
 <body>
@@ -56,9 +54,9 @@
         </div>
     </div>
 
-
+<div class='contentBlock'>
 {% block content %}{% endblock %}
-
+</div>
 {% block scripts %}{% endblock %}
 <script>
   window.fbAsyncInit = function() {
@@ -77,6 +75,10 @@
      fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
 </script>
+    <script src="{% static 'scripts/UserProfile.js' %}"></script>
+    <script src="{% static 'scripts/jquery-1.10.2.min.js' %}"></script>
+    <script src="{% static 'scripts/bootstrap.min.js' %}"></script>
+
 </body>
 
 <div ></div>
