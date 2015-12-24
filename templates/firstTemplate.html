@@ -40,8 +40,8 @@
 
 
     <div class='container'>
-    <canvas width="620" height="430" ></canvas>
-<canvas width="620" height="430" id="second" ></canvas>
+    <canvas width="620" height="430" id = "first" style="border: 1px solid; position:absolute;"></canvas>
+    <canvas width="620" height="430" id="second" ></canvas>
     </div>
 
     <div id="disqus_thread"></div>
@@ -50,14 +50,13 @@
 {% block scripts %}
 
 <script type="text/javascript">
-
-        var ctx = document.querySelector("canvas").getContext("2d"),
+    /*
+    var ctx = document.querySelector("canvas").getContext("2d"),
     dashLen = 80, dashOffset = dashLen, speed = 5,
     txt = "Hello  everyone", x = 20, i = 0;
-
-ctx.font = "30px Comic Sans MS, cursive, TSCu_Comic, sans-serif";
-ctx.lineWidth = 5; ctx.lineJoin = "round"; ctx.globalAlpha = 2/3;
-ctx.strokeStyle = ctx.fillStyle = "#1f2f90";
+    ctx.font = "30px Comic Sans MS, cursive, TSCu_Comic, sans-serif";
+    ctx.lineWidth = 5; ctx.lineJoin = "round"; ctx.globalAlpha = 2/3;
+    ctx.strokeStyle = ctx.fillStyle = "#1f2f90";
 
 (function loop() {
   ctx.clearRect(x, 0, 60, 150);
@@ -75,7 +74,8 @@ ctx.strokeStyle = ctx.fillStyle = "#1f2f90";
     if (i < txt.length) requestAnimationFrame(loop);
   }
 })();
-    </script>
+*/
+</script>
 
 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
 {% endblock %}
