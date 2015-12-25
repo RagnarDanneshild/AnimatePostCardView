@@ -6,19 +6,17 @@ from PostCard.forms import UserProfileForm
 from django.forms import modelformset_factory
 from django.shortcuts import render_to_response
 from PostCard.models import *
+from django.views.generic import TemplateView
 # Create your views here.
 
-def home(request):
-    return render(
-    request,
-    'index.html'
-)
+class Home(TemplateView):
+   template_name='index.html'
 
 
 def profile(request):
     userProfile=UserInfo.objects.get(user=request.user)
     form=UserProfileForm
-    form.instance=userProfile;
+    form.instance=userProfile
     return render(
         request,
         'profile.html',
@@ -29,11 +27,6 @@ def profile(request):
           )
     )
 
-def firstTemplate(request):
-    return render(
-
-    request,
-        'firstTemplate.html'
-    )
-
+class FirstTemplate(TemplateView):
+   template_name='firstTemplate.html'
 
