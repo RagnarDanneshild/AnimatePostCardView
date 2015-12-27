@@ -21,6 +21,6 @@ urlpatterns = [
     url(r'^accounts/register$', RegistrationViewUniqueEmail.as_view(),name='registration_register'),
     url(r'^accounts/', include('registration.backends.default.urls')),
      url(r'^profile$','PostCard.views.profile', name='profile'),
-    url(r'^firstTemplate$',FirstTemplate.as_view(),name='firstTemplate')
+    url(r'^edit$',edit.as_view(),name='edit')
 
 ]

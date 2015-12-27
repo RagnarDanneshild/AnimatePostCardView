@@ -39,9 +39,20 @@
     </div>
 
 
-    <div class='container'>
-    <canvas width="620" height="430" id = "first" style="border: 1px solid; position:absolute;"></canvas>
-    <canvas width="620" height="430" id="second" ></canvas>
+    <div class='container' id = 'mainblock'>
+    <canvas width="800" height="600" id = "first" style="border: 1px solid; position:absolute;"></canvas>
+    <button type="button" class="btn btn-default" onclick="upObject()">Object Up</button>
+	<button type="button" class="btn btn-default" onclick="downObject()">Object Down</button>
+    <button type="button" class="btn btn-default" onclick="createTextField()">Create New Text Field</button>
+    <input type = "color" id='text-color' onchange="changeColor(this.value)">
+    <select id = 'setfontfamily'>
+        <option value = "arial black">arial black</option>
+        <option value = "sans-serif">sans-serif</option>
+        <option value = "monospace">monospace</option>
+        <option value = "Comic Sans MS">Comic Sans MS</option>
+        <option value = "BansheeStd">BansheeStd</option>
+        <option value = "Agency FB">Agency FB</option>
+    </select>
     </div>
 
     <div id="disqus_thread"></div>

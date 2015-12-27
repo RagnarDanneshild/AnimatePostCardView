@@ -27,6 +27,6 @@ def profile(request):
           )
     )
 
-class FirstTemplate(TemplateView):
-   template_name='firstTemplate.html'
+class edit(TemplateView):
+   template_name='edit.html'
 
