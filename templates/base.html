@@ -8,9 +8,16 @@
     <link rel="stylesheet" type="text/css" href="{% static 'content/style.css' %}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
+
 </head>
 
 <body>
+
+<div  class="imgView">
+    <img src="">
+
+</div>
+ <img src="{% static "scripts/Happy_Birthday_Transparent_PNG_Frame.png" %} " style="display: none;" id="firstImage"/>
 
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
@@ -55,9 +62,7 @@
     </div>
 
 <div class='contentBlock'>
-{% block content %}{% endblock %}
-</div>
-{% block scripts %}{% endblock %}
+ {% block content %}{% endblock %}
 <script>
   window.fbAsyncInit = function() {
     FB.init({
@@ -75,12 +80,20 @@
      fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
 </script>
+      <script src="{% static 'scripts/jquery-1.10.2.min.js' %}"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/dropbox.js/0.10.2/dropbox.min.js"></script>
+
+ <script src="{% static 'scripts/dropbox.js' %}"></script>
+ <script src="{% static 'scripts/ImgView.js' %}"></script>
+    <script src="{% static 'scripts/Crsf_tokenSetup.js' %}"></script>
     <script src="{% static 'scripts/UserProfile.js' %}"></script>
-    <script src="{% static 'scripts/jquery-1.10.2.min.js' %}"></script>
     <script src="{% static 'scripts/bootstrap.min.js' %}"></script>
     <script src="{% static 'scripts/fabric.min.js' %}"></script>
     <script src="{% static 'scripts/TemplateCreation.js' %}"></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.2.0/min/dropzone.min.js'></script>
+<script src="{% static 'scripts/DemotivatorTemplate.js' %}"></script>
+
+</div>
+{% block scripts %}{% endblock %}
 </body>
 
 <div ></div>

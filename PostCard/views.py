@@ -7,6 +7,7 @@ from django.forms import modelformset_factory
 from django.shortcuts import render_to_response
 from PostCard.models import *
 from django.views.generic import TemplateView
+from django.core import serializers
 # Create your views here.
 
 class Home(TemplateView):
@@ -29,4 +30,17 @@ def profile(request):
 
 class edit(TemplateView):
    template_name='edit.html'
+
+
+def save_post_card(request):
+    if request.is_ajax():
+        post_card=PostCard(user=request.user,canvas=request.POST['json'],picture_url=request.POST['url'])
+        post_card.save()
+
+    return HttpResponse('it s ok')
+
+def getList(request):
+    if request.is_ajax():
+        data = serializers.serialize("json", PostCard.objects.all())
+    return HttpResponse(data, content_type='application/json')
 

@@ -7,7 +7,6 @@ class RegistrationViewUniqueEmail(RegistrationView):
  form_class = RegistrationFormUniqueEmail
 
 
-
 urlpatterns = [
     url(r'^$', Home.as_view(), name='home'),
     url(r'^admin/', include(admin.site.urls)),
@@ -21,6 +20,7 @@ urlpatterns = [
     url(r'^accounts/register$', RegistrationViewUniqueEmail.as_view(),name='registration_register'),
     url(r'^accounts/', include('registration.backends.default.urls')),
      url(r'^profile$','PostCard.views.profile', name='profile'),
-    url(r'^edit$',edit.as_view(),name='edit')
-
+    url(r'^firstTemplate$',edit.as_view(),name='edit'),
+    url(r'^savePostCard$','PostCard.views.save_post_card'),
+    url(r'^getListOfPicture$','PostCard.views.getList'),
 ]

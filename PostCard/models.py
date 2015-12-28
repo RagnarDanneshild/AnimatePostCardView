@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
-
+from jsonfield import JSONField
 # Create your models here.
 
 
@@ -28,12 +28,13 @@ class Template(models.Model):
 
 class PostCard(models.Model):
 
-    user = models.ForeignKey(UserInfo,on_delete=models.CASCADE)
-    picture_url = models.URLField()
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    picture_url = models.CharField(max_length=40)
+    canvas=JSONField()
     like_num = models.IntegerField(default=0)
     tag_field = models.TextField()
     creation_date = models.DateTimeField(auto_now_add=True)
-    template = models.ForeignKey(Template,on_delete=models.CASCADE)
+
 
 
 class PostcardComments(models.Model):
@@ -47,7 +48,7 @@ class PostcardComments(models.Model):
 
 class UserAchievement(models.Model):
 
-    user = models.ForeignKey(UserInfo,on_delete=models.CASCADE)
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
     name = models.CharField(max_length=15)
     description = models.TextField()
     badge_url = models.URLField()

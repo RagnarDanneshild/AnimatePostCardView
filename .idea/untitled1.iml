@@ -15,6 +15,7 @@
     <orderEntry type="jdk" jdkName="Python 3.5.1rc1 (C:\Users\Pawel\AppData\Local\Programs\Python\Python35\python.exe)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="fabric" level="application" />
+    <orderEntry type="library" name="dropbox" level="application" />
   </component>
   <component name="TemplatesService">
     <option name="TEMPLATE_CONFIGURATION" value="Django" />

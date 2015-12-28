@@ -6,7 +6,7 @@ var canvasWrapper, handleDragEnd, handleDragEnter, handleDragLeave, handleDragOv
 var selectedObject;
 var canvas = this.__canvas = new fabric.Canvas('first');
 var imgurl = new Image();
-imgurl.src= 'http://content.foto.mail.ru/mail/979ru/35/s-47.png';
+imgurl.src= $('#firstImage').attr("src");;
 fabric.Image.fromURL(imgurl.src,function(oimg){
     oimg.scaleX=canvas.width / imgurl.width;
     oimg.scaleY= canvas.height / imgurl.height;

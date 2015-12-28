@@ -40,7 +40,8 @@ INSTALLED_APPS = (
     'PostCard',
     'social.apps.django_app.default',
     'registration',
-    'bootstrap3',
+
+
 
 )
 
@@ -159,3 +160,5 @@ SERVER_EMAIL = EMAIL_HOST_USER
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 ACCOUNT_ACTIVATION_DAYS = 3
 LOGIN_REDIRECT_URL = '/'
+
+
