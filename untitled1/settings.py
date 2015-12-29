@@ -40,7 +40,7 @@ INSTALLED_APPS = (
     'PostCard',
     'social.apps.django_app.default',
     'registration',
-
+    'bootstrap3',
 
 
 )

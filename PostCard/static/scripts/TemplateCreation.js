@@ -29,7 +29,7 @@ upObject = function() {
 downObject = function() {
   selectedObject.sendBackwards();
 };
-
+var something = canvas.wrapperEl.offsetTop;
 createTextField = function(){
     var textfield = new fabric.IText('New Text Field', {
     fontFamily: 'arial black',
@@ -38,7 +38,7 @@ createTextField = function(){
     top: 300 ,
     });
     textfield.on('mouseup', function(options) {
-    if(options.e.layerY<=0||options.e.layerY>=(canvas.height-20)||options.e.layerX<=0||options.e.layerX>=(canvas.width-50)) {
+    if(options.e.pageY<=canvas.wrapperEl.offsetTop||options.e.pageY>=(canvas.height+canvas.wrapperEl.offsetTop)||options.e.pageX<=canvas.wrapperEl.offsetLeft||options.e.pageX>=(canvas.width+canvas.wrapperEl.offsetLeft)) {
         canvas.remove(this);
     }
     });
@@ -77,7 +77,7 @@ loadOneImage = function(img, newImage) {
   });
     newImage.on('mouseup', function() {
     this.off('mousedown');
-     if(options.e.layerY<=0||options.e.layerY>=(canvas.height-20)||options.e.layerX<=0||options.e.layerX>=(canvas.width-50)) {
+     if(options.e.pageY<=canvas.wrapperEl.offsetTop||options.e.pageY>=(canvas.height+canvas.wrapperEl.offsetTop)||options.e.pageX<=canvas.wrapperEl.offsetLeft||options.e.pageX>=(canvas.width+canvas.wrapperEl.offsetLeft)) {
         canvas.remove(this);
     }
     });
@@ -148,10 +148,10 @@ handleDrop = function(e) {
           });
             newImage.on('mouseup', function() {
             this.off('mousedown');
-             if(options.e.layerY<=0||options.e.layerY>=(canvas.height-20)||options.e.layerX<=0||options.e.layerX>=(canvas.width-50)) {
-        canvas.remove(this);
-    }
-    });
+             if(options.e.pageY<=canvas.wrapperEl.offsetTop||options.e.pageY>=(canvas.height+canvas.wrapperEl.offsetTop)||options.e.pageX<=canvas.wrapperEl.offsetLeft||options.e.pageX>=(canvas.width+canvas.wrapperEl.offsetLeft)) {
+                 canvas.remove(this);
+             }
+            });
             if(newImage.width>=canvas.width-100 || newImage.height>=canvas.height-100)
             {
                 var val = (canvas.width/2) / newImage.width;
