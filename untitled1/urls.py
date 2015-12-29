@@ -23,4 +23,5 @@ urlpatterns = [
     url(r'^firstTemplate$',edit.as_view(),name='edit'),
     url(r'^savePostCard$','PostCard.views.save_post_card'),
     url(r'^getListOfPicture$','PostCard.views.getList'),
+    url(r'^postcard/(?P<id>[0-9]+)/$','PostCard.views.showPostCard'),
 ]

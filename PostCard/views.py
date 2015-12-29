@@ -8,6 +8,7 @@ from django.shortcuts import render_to_response
 from PostCard.models import *
 from django.views.generic import TemplateView
 from django.core import serializers
+import json
 # Create your views here.
 
 class Home(TemplateView):
@@ -44,3 +45,9 @@ def getList(request):
         data = serializers.serialize("json", PostCard.objects.all())
     return HttpResponse(data, content_type='application/json')
 
+def showPostCard(request,id=1):
+    if request.is_ajax():
+        s=serializers.serialize('json',[PostCard.objects.get(id=id)])
+        return HttpResponse(s, content_type='application/json')
+    else:
+        return render(request,'PostCardView.html')

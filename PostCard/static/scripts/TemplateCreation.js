@@ -77,7 +77,7 @@ loadOneImage = function(img, newImage) {
   });
     newImage.on('mouseup', function() {
     this.off('mousedown');
-    if(this.top<=0||this.top>=(canvas.height-20)||this.left<=0||this.left>=(canvas.width-50)) {
+     if(options.e.layerY<=0||options.e.layerY>=(canvas.height-20)||options.e.layerX<=0||options.e.layerX>=(canvas.width-50)) {
         canvas.remove(this);
     }
     });
@@ -148,10 +148,10 @@ handleDrop = function(e) {
           });
             newImage.on('mouseup', function() {
             this.off('mousedown');
-            if(this.top<=0||this.top>=(canvas.height-20)||this.left<=0||this.left>=(canvas.width-50)) {
-                canvas.remove(this);
-            }
-            });
+             if(options.e.layerY<=0||options.e.layerY>=(canvas.height-20)||options.e.layerX<=0||options.e.layerX>=(canvas.width-50)) {
+        canvas.remove(this);
+    }
+    });
             if(newImage.width>=canvas.width-100 || newImage.height>=canvas.height-100)
             {
                 var val = (canvas.width/2) / newImage.width;

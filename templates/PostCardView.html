@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{%  block content %}
+<canvas width="800" height="600" id="viewCanvas"></canvas>
+
+    <div id="disqus_thread"></div>
+{%  endblock %}
+{% block scripts %}
+    <script>
+    initCanvas();
+
+var disqus_config = function () {
+    this.page.url = window.location.href; // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = window.location.pathname; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    this.page.title = window.location.pathname;
+};
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+
+s.src = '//ragnardanneshild.disqus.com/embed.js';
+
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+
+    </script>
+
+
+
+{%  endblock %}
