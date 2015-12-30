@@ -9,7 +9,7 @@ from PostCard.models import *
 from django.views.generic import TemplateView
 from django.core import serializers
 import json
-# Create your views here.
+# Create your views here. f
 
 class Home(TemplateView):
    template_name='index.html'
@@ -23,7 +23,7 @@ def profile(request):
         request,
         'profile.html',
         context_instance = RequestContext(request,
-        {   "form": form,
+        {"form": form,
             'userInfo':userProfile
         }
           )
@@ -40,13 +40,17 @@ def save_post_card(request):
 
     return HttpResponse('it s ok')
 
-def getList(request):
+def getList(request,num=4):
     if request.is_ajax():
-        data = serializers.serialize("json", PostCard.objects.all())
+        if(request.GET.get('user')==None):
+            data = serializers.serialize("json", PostCard.objects.all()[int(num): int(num)+2])
+        else:
+            data=serializers.serialize("json",PostCard.objects.filter(user=request.user))
     return HttpResponse(data, content_type='application/json')
 
 def showPostCard(request,id=1):
     if request.is_ajax():
+
         s=serializers.serialize('json',[PostCard.objects.get(id=id)])
         return HttpResponse(s, content_type='application/json')
     else:

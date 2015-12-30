@@ -37,7 +37,7 @@ $('#savesmt').click(function()
 
 function init()
 {
-    $.get('/getListOfPicture',function(data){
+    $.get('/getListOfPicture/0',function(data){
      $.each( data, function( i, item ) {
 
          getImage(item.fields.picture_url,
@@ -52,4 +52,24 @@ function init()
 
 
 
-});}
+});};
+
+
+function initUserCard()
+{
+    $.get('/getListOfPicture/4',{user:true},function(data){
+     $.each( data, function( i, item ) {
+
+         getImage(item.fields.picture_url,
+         function(url){
+            $( "#UserimgContainer").append(getView(url,item.pk));
+         }
+         );
+   //     element.appendTo( "#imgContainer" );
+
+
+    });
+
+
+
+});};

@@ -22,6 +22,6 @@ urlpatterns = [
      url(r'^profile$','PostCard.views.profile', name='profile'),
     url(r'^firstTemplate$',edit.as_view(),name='edit'),
     url(r'^savePostCard$','PostCard.views.save_post_card'),
-    url(r'^getListOfPicture$','PostCard.views.getList'),
+    url(r'^getListOfPicture/(?P<num>[0-9]+)/$','PostCard.views.getList'),
     url(r'^postcard/(?P<id>[0-9]+)/$','PostCard.views.showPostCard'),
 ]
