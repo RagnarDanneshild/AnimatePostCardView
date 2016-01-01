@@ -15,7 +15,6 @@ $.get(window.location.pathname, function(data) {
    });
 
 function load(){
-    var c = document.getElementById('first');
     canlen = canvas.getObjects().length;
     var elnum;
     for (var i = 0;i<canlen;i++){
@@ -24,13 +23,10 @@ function load(){
             break;
         }
     }
-    console.log(canvas.getObjects().length);
     imgheight=canvas.item(elnum).height;
     imgwidth=canvas.item(elnum).width;
     var y = canvas.item(elnum).scaleY;
     var x = canvas.item(elnum).scaleX;
-    c.height = imgheight*y;
-    c.width = imgwidth*x;
     canvas.setHeight(imgheight*y);
     canvas.setWidth(imgwidth*x);
     canvas.renderAll.bind(canvas);
@@ -217,7 +213,6 @@ $('#savetest').click(function(){
     savePicture(canvas,function(data) {
         var postCardName = document.getElementById('postCardName').value;
         if (postCardName != '') {
-            document.getElementsByClassName('sevetest')
             var jsn = canvas.toJSON(['selectable', 'evented']);
             $.post('/save', {json: JSON.stringify(jsn), url: data, name: postCardName})
                 .done(function (data) {
@@ -226,6 +221,7 @@ $('#savetest').click(function(){
                 });
         }
         else{
+            button.disabled = false;
             alert('Enter Postcard Name!')
         }
     });
