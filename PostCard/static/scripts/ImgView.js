@@ -1,29 +1,35 @@
 /**
  * Created by Pawel on 27.12.2015.
  */
-function getView(url,id)
-{
-return "<div class='imgView' id='"+id+"'>" +
-"<a href='/postcard/"+id+"'><h3 class='full_view'>NAME</h3></a>"+
-
-    "<img src='"+url+"'/>"+
-    "</div>"
-
+function getView(url,id,name,user) {
+    var usr = document.getElementById("username").value;
+    if (usr == user){
+        return "<div class='imgView' id='"+id+"'>" +
+        "<a href='/postcard/"+id+"'><h3 class='full_view'>"+name+"</h3></a>"+
+        "<a href='/edit/"+id+"'><h3 class='full_view'>Edit</h3></a>"+
+        "<img src='"+url+"'/>"+
+        "</div>"
+    }
+    else{
+        return "<div class='imgView' id='"+id+"'>" +
+        "<a href='/postcard/"+id+"'><h3 class='full_view'>"+name+"</h3></a>"+
+        "<img src='"+url+"'/>"+
+        "</div>"
+    }
 }
-
-
-$(document).on('click','.viewPage',function(){
-
-
+$("#selectTemplate").click(function(){
+    window.location = "/createnew/"+$(this).val();
 });
 
 function initCanvas()
 {
+
     $.get(window.location.pathname, function(data) {
-        var can = new fabric.Canvas('viewCanvas');
 
-   can.loadFromJSON(JSON.parse(data[0].fields.canvas));
-
-})
+       var can = new fabric.Canvas('viewCanvas');
+       can.loadFromJSON(JSON.parse(data[0].fields.canvas),can.renderAll.bind(can),function(o, object) {
+           object.selectable = false;
+        });
+    })
 
 }

@@ -2,40 +2,58 @@
  * Created by HellAlien on 24.12.2015.
  */
 var canvasWrapper, handleDragEnd, handleDragEnter, handleDragLeave, handleDragOver, handleDragStart, handleDrop, images, loadOneImage, noStandartDrop, upObject;
+var selectedObject,canlen;
+//var imgurl = new Image();
+//imgurl.src= $('#3Image').attr("src");
 
-var selectedObject;
-var canvas = this.__canvas = new fabric.Canvas('first');
-var imgurl = new Image();
-imgurl.src= $('#firstImage').attr("src");;
-fabric.Image.fromURL(imgurl.src,function(oimg){
-    oimg.scaleX=canvas.width / imgurl.width;
-    oimg.scaleY= canvas.height / imgurl.height;
-    oimg.selectable = false;
-    oimg.evented = false;
-    canvas.add(oimg);
-})
+var canvas = new fabric.Canvas('first');
 
+$.get(window.location.pathname, function(data) {
+        canvas.loadFromJSON(JSON.parse(data[0].fields.canvas),load,function(o, object) {
+            canvas.add(object);
+        });
+   });
+
+function load(){
+    var c = document.getElementById('first');
+    canlen = canvas.getObjects().length;
+    var elnum;
+    for (var i = 0;i<canlen;i++){
+        if (canvas.item(i).evented == false){
+            elnum = i;
+            break;
+        }
+    }
+    console.log(canvas.getObjects().length);
+    imgheight=canvas.item(elnum).height;
+    imgwidth=canvas.item(elnum).width;
+    var y = canvas.item(elnum).scaleY;
+    var x = canvas.item(elnum).scaleX;
+    c.height = imgheight*y;
+    c.width = imgwidth*x;
+    canvas.setHeight(imgheight*y);
+    canvas.setWidth(imgwidth*x);
+    canvas.renderAll.bind(canvas);
+}
 canvas.controlsAboveOverlay = true;
-
 //textfield.set({left:300,top:100});
-canvas.on('object:selected', function(options) {
-  selectedObject = options.target;
-});
 
 upObject = function() {
+    selectedObject = canvas.getActiveObject();
   selectedObject.bringForward();
 };
 
 downObject = function() {
+    selectedObject = canvas.getActiveObject();
   selectedObject.sendBackwards();
 };
-var something = canvas.wrapperEl.offsetTop;
+
 createTextField = function(){
     var textfield = new fabric.IText('New Text Field', {
     fontFamily: 'arial black',
     fontSize:30,
-    left: 400,
-    top: 300 ,
+    left: canvas.width/2,
+    top: canvas.height/2 ,
     });
     textfield.on('mouseup', function(options) {
     if(options.e.pageY<=canvas.wrapperEl.offsetTop||options.e.pageY>=(canvas.height+canvas.wrapperEl.offsetTop)||options.e.pageX<=canvas.wrapperEl.offsetLeft||options.e.pageX>=(canvas.width+canvas.wrapperEl.offsetLeft)) {
@@ -120,10 +138,6 @@ handleDragLeave = function(e) {
 
 canvasWrapper = document.getElementById('mainblock');
 
-canvas.on('object:selected', function(options) {
-  var selectedObject;
-  selectedObject = options.target;
-});
 
 handleDrop = function(e) {
   var f, files, i, img, newImage, reader;
@@ -146,7 +160,7 @@ handleDrop = function(e) {
             left: e.layerX,
             top: e.layerY
           });
-            newImage.on('mouseup', function() {
+            newImage.on('mouseup', function(options) {
             this.off('mousedown');
              if(options.e.pageY<=canvas.wrapperEl.offsetTop||options.e.pageY>=(canvas.height+canvas.wrapperEl.offsetTop)||options.e.pageX<=canvas.wrapperEl.offsetLeft||options.e.pageX>=(canvas.width+canvas.wrapperEl.offsetLeft)) {
                  canvas.remove(this);
@@ -167,7 +181,7 @@ handleDrop = function(e) {
     loadOneImage(img, newImage);
     canvas.add(newImage);
   }
-  updateLayers(canvas.getObjects());
+  //updateLayers(canvas.getObjects());
   return false;
 };
 
@@ -196,3 +210,23 @@ canvasWrapper.addEventListener('dragleave', handleDragLeave, false);
 canvasWrapper.addEventListener('dragover', handleDragOver, false);
 
 canvasWrapper.addEventListener('drop', handleDrop, false);
+
+$('#savetest').click(function(){
+    var button = document.getElementById("savetest");
+    button.disabled = true;
+    savePicture(canvas,function(data) {
+        var postCardName = document.getElementById('postCardName').value;
+        if (postCardName != '') {
+            document.getElementsByClassName('sevetest')
+            var jsn = canvas.toJSON(['selectable', 'evented']);
+            $.post('/save', {json: JSON.stringify(jsn), url: data, name: postCardName})
+                .done(function (data) {
+                    button.disabled = false;
+                    alert('its ok');
+                });
+        }
+        else{
+            alert('Enter Postcard Name!')
+        }
+    });
+});

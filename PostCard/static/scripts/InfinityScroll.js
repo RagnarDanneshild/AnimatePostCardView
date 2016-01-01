@@ -20,15 +20,11 @@ $(document).ready(function(){
  {
  $.get('/getListOfPicture/'+coff.toString(),function(data){
      $.each( data, function( i, item ) {
-
          getImage(item.fields.picture_url,
          function(url){
-            $( "#imgContainer").append(getView(url,item.pk));
+            $( "#imgContainer").append(getView(url,item.pk,item.fields.name,item.fields.user));
          }
          );
-
-
-
     });
  });
      coff=coff+2;

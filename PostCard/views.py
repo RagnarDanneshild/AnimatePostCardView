@@ -33,24 +33,57 @@ class edit(TemplateView):
    template_name='edit.html'
 
 
+def save(request):
+    if request.is_ajax():
+        post_card = PostCard(user=request.user, canvas=request.POST['json'], picture_url=request.POST['url'],name=request.POST['name'])
+        if PostCard.objects.filter(name=request.POST['name']).exists():
+            oldpost_card = PostCard.objects.get(name=request.POST['name'])
+            oldpost_card.canvas = request.POST['json']
+            oldpost_card.picture_url = request.POST['url']
+            oldpost_card.save()
+        else:
+            post_card.save()
+    return HttpResponse('it s ok')
+
+def edit(request,templnum = '',id = 0):
+    if templnum != '' :
+        if request.is_ajax():
+            s=serializers.serialize('json',[PostCard.objects.get(picture_url=templnum)])
+            print(s)
+            return HttpResponse(s, content_type='application/json')
+        else:
+            return render(request,'edit.html')
+    elif templnum == '' and id != 0:
+        if request.is_ajax():
+            s=serializers.serialize('json',[PostCard.objects.get(id=id)])
+            print(s)
+            return HttpResponse(s, content_type='application/json')
+        else:
+            return render(request,'edit.html')
+
 def save_post_card(request):
     if request.is_ajax():
-        post_card=PostCard(user=request.user,canvas=request.POST['json'],picture_url=request.POST['url'])
+        post_card = PostCard(user=request.user,canvas=request.POST['json'],picture_url=request.POST['url'])
         post_card.save()
 
     return HttpResponse('it s ok')
 
 def getList(request,num=4):
+    slist = PostCard.objects.all()
+    mass = []
+    for item in slist:
+        if 'template' not in item.picture_url:
+            mass.append(item)
     if request.is_ajax():
         if(request.GET.get('user')==None):
-            data = serializers.serialize("json", PostCard.objects.all()[int(num): int(num)+2])
+            data = serializers.serialize("json", mass[int(num): int(num)+5])
+
         else:
             data=serializers.serialize("json",PostCard.objects.filter(user=request.user))
     return HttpResponse(data, content_type='application/json')
 
 def showPostCard(request,id=1):
     if request.is_ajax():
-
         s=serializers.serialize('json',[PostCard.objects.get(id=id)])
         return HttpResponse(s, content_type='application/json')
     else:
