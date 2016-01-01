@@ -31,6 +31,7 @@ class PostCard(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     picture_url = models.CharField(max_length=40)
     canvas=JSONField()
+    name = models.CharField(max_length=20,default='noname')
     like_num = models.IntegerField(default=0)
     tag_field = models.TextField()
     creation_date = models.DateTimeField(auto_now_add=True)

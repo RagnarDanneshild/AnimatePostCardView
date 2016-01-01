@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {%  block content %}
+
       <div class="btn-pref btn-group  btn-group-lg" role="group" aria-label="...">
         <div class="btn-group" role="group">
             <button type="button" id="stars" class="btn btn-primary" href="#tab1" data-toggle="tab"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>
@@ -23,7 +24,7 @@
       <div class="tab-content">
         <div class="tab-pane fade in active" id="tab1">
           <h3>This is tab 1</h3>
-            <span id="savesmt">SAVE</span>
+            <button type="button" class="btn btn-default" id="savetest" >Save Postcard</button>
         </div>
         <div class="tab-pane fade in" id="tab2">
          <div class="template"  id="firstTemplate">
@@ -40,9 +41,12 @@
       </div>
     </div>
 
-
+    <div>
+			<span>Post Card Name </span>
+			<input type="text" name='Model Save' id = 'postCardName' text = ''>
+    </div>
     <div class='container' id = 'mainblock'>
-    <canvas width="800" height="600" id = "first" style="border: 1px solid; position:absolute;"></canvas>
+    <canvas width="100" height="100" id = "first" style="border: 1px solid; position:absolute;"></canvas>
     <button type="button" class="btn btn-default" onclick="upObject()">Object Up</button>
 	<button type="button" class="btn btn-default" onclick="downObject()">Object Down</button>
     <button type="button" class="btn btn-default" onclick="createTextField()">Create New Text Field</button>
@@ -62,6 +66,7 @@
 {% block scripts %}
 
 <script type="text/javascript">
+
     /*
     var ctx = document.querySelector("canvas").getContext("2d"),
     dashLen = 80, dashOffset = dashLen, speed = 5,

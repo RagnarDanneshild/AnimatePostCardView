@@ -1,41 +1,40 @@
 /**
+ * Created by HellAlien on 01.01.2016.
+ */
+/**
  * Created by HellAlien on 24.12.2015.
  */
 var canvasWrapper, handleDragEnd, handleDragEnter, handleDragLeave, handleDragOver, handleDragStart, handleDrop, images, loadOneImage, noStandartDrop, upObject;
+
 var selectedObject,canlen;
-//var imgurl = new Image();
-//imgurl.src= $('#3Image').attr("src");
-
-var canvas = new fabric.Canvas('first');
-
-$.get(window.location.pathname, function(data) {
-        canvas.loadFromJSON(JSON.parse(data[0].fields.canvas),load,function(o, object) {
-            canvas.add(object);
-        });
-   });
-
-function load(){
-    var c = document.getElementById('first');
-    canlen = canvas.getObjects().length;
-    var elnum;
-    for (var i = 0;i<canlen;i++){
-        if (canvas.item(i).evented == false){
-            elnum = i;
-            break;
-        }
-    }
-    console.log(canvas.getObjects().length);
-    imgheight=canvas.item(elnum).height;
-    imgwidth=canvas.item(elnum).width;
-    var y = canvas.item(elnum).scaleY;
-    var x = canvas.item(elnum).scaleX;
-    c.height = imgheight*y;
-    c.width = imgwidth*x;
-    canvas.setHeight(imgheight*y);
-    canvas.setWidth(imgwidth*x);
-    canvas.renderAll.bind(canvas);
+var c = document.getElementById('first');
+var imgurl = new Image();
+imgurl.src= $('#3Image').attr("src");
+if(imgurl.width>800){
+    var n = 800/imgurl.width;
+    c.width = 800;
+    c.height = imgurl.height*n;
 }
-canvas.controlsAboveOverlay = true;
+else{
+    c.width = imgurl.width;
+}
+if(imgurl.height>600){
+    var nn = 600/imgurl.height;
+    c.height = 600;
+    c.width = imgurl.width*nn;
+}else{
+    c.height = imgurl.height;
+}
+var canvas = new fabric.Canvas('first');
+fabric.Image.fromURL(imgurl.src,function(oimg){
+    oimg.scaleX=canvas.width / imgurl.width;
+    oimg.scaleY= canvas.height / imgurl.height;
+    oimg.selectable = false;
+    oimg.evented = false;
+    canvas.add(oimg);
+})
+
+
 //textfield.set({left:300,top:100});
 
 upObject = function() {
@@ -52,8 +51,8 @@ createTextField = function(){
     var textfield = new fabric.IText('New Text Field', {
     fontFamily: 'arial black',
     fontSize:30,
-    left: canvas.width/2,
-    top: canvas.height/2 ,
+    left: 400,
+    top: 300 ,
     });
     textfield.on('mouseup', function(options) {
     if(options.e.pageY<=canvas.wrapperEl.offsetTop||options.e.pageY>=(canvas.height+canvas.wrapperEl.offsetTop)||options.e.pageX<=canvas.wrapperEl.offsetLeft||options.e.pageX>=(canvas.width+canvas.wrapperEl.offsetLeft)) {
@@ -160,7 +159,7 @@ handleDrop = function(e) {
             left: e.layerX,
             top: e.layerY
           });
-            newImage.on('mouseup', function(options) {
+            newImage.on('mouseup', function() {
             this.off('mousedown');
              if(options.e.pageY<=canvas.wrapperEl.offsetTop||options.e.pageY>=(canvas.height+canvas.wrapperEl.offsetTop)||options.e.pageX<=canvas.wrapperEl.offsetLeft||options.e.pageX>=(canvas.width+canvas.wrapperEl.offsetLeft)) {
                  canvas.remove(this);
@@ -181,7 +180,7 @@ handleDrop = function(e) {
     loadOneImage(img, newImage);
     canvas.add(newImage);
   }
-  //updateLayers(canvas.getObjects());
+  updateLayers(canvas.getObjects());
   return false;
 };
 
@@ -211,22 +210,3 @@ canvasWrapper.addEventListener('dragover', handleDragOver, false);
 
 canvasWrapper.addEventListener('drop', handleDrop, false);
 
-$('#savetest').click(function(){
-    var button = document.getElementById("savetest");
-    button.disabled = true;
-    savePicture(canvas,function(data) {
-        var postCardName = document.getElementById('postCardName').value;
-        if (postCardName != '') {
-            document.getElementsByClassName('sevetest')
-            var jsn = canvas.toJSON(['selectable', 'evented']);
-            $.post('/save', {json: JSON.stringify(jsn), url: data, name: postCardName})
-                .done(function (data) {
-                    button.disabled = false;
-                    alert('its ok');
-                });
-        }
-        else{
-            alert('Enter Postcard Name!')
-        }
-    });
-});

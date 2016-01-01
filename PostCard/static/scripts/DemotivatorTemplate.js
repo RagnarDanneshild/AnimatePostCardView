@@ -42,7 +42,7 @@ function init()
 
          getImage(item.fields.picture_url,
          function(url){
-            $( "#imgContainer").append(getView(url,item.pk));
+            $( "#imgContainer").append(getView(url,item.pk,item.fields.name,item.fields.user));
          }
          );
    //     element.appendTo( "#imgContainer" );

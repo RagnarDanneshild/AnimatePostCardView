@@ -17,8 +17,6 @@
     <img src="">
 
 </div>
- <img src="{% static "scripts/Happy_Birthday_Transparent_PNG_Frame.png" %} " style="display: none;" id="firstImage"/>
-
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -36,8 +34,9 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     {%  if user.is_authenticated %}
-        <li><a href="{% url 'profile' %}" class="navbar-brand">Hello {{ user.username }}!</a></li>
-        <li><a href="{% url 'logout' %}">Logout</a></li>
+                        <li><a href="{% url 'profile' %}" class="navbar-brand">Hello {{ user.username }}!</a></li>
+                        <li><a href="{% url 'logout' %}">Logout</a></li>
+                        <input id="username" type="hidden" value="{{ user.id }}" />
                     {% else %}
     <li>
       <a href="accounts/register">
@@ -88,10 +87,9 @@
     <script src="{% static 'scripts/UserProfile.js' %}"></script>
     <script src="{% static 'scripts/bootstrap.min.js' %}"></script>
     <script src="{% static 'scripts/fabric.min.js' %}"></script>
-    <script src="{% static 'scripts/TemplateCreation.js' %}"></script>
     <script src="{% static 'scripts/DemotivatorTemplate.js' %}"></script>
     <script src="{% static 'scripts/InfinityScroll.js' %}"></script>
-
+<script src="{% static 'scripts/TemplateCreation.js' %}"></script>
 </div>
 {% block scripts %}{% endblock %}
 </body>
