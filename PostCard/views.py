@@ -50,14 +50,12 @@ def edit(request,templnum = '',id = 0):
     if templnum != '' :
         if request.is_ajax():
             s=serializers.serialize('json',[PostCard.objects.get(picture_url=templnum)])
-            print(s)
             return HttpResponse(s, content_type='application/json')
         else:
             return render(request,'edit.html')
     elif templnum == '' and id != 0:
         if request.is_ajax():
             s=serializers.serialize('json',[PostCard.objects.get(id=id)])
-            print(s)
             return HttpResponse(s, content_type='application/json')
         else:
             return render(request,'edit.html')

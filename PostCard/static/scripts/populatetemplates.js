@@ -10,21 +10,22 @@ var selectedObject,canlen;
 var c = document.getElementById('first');
 var imgurl = new Image();
 imgurl.src= $('#3Image').attr("src");
-if(imgurl.width>800){
-    var n = 800/imgurl.width;
-    c.width = 800;
-    c.height = imgurl.height*n;
+var x = imgurl.width;
+var y = imgurl.height;
+if(x>800){
+    var n = 800/x;
+    x = 800;
+    y = y*n;
 }
-else{
-    c.width = imgurl.width;
+if(y>600) {
+    var nn = 600 / y;
+    y = 600;
+    x = x * nn;
 }
-if(imgurl.height>600){
-    var nn = 600/imgurl.height;
-    c.height = 600;
-    c.width = imgurl.width*nn;
-}else{
-    c.height = imgurl.height;
-}
+// if it not working then set canvas.setHeight\width properties
+c.height = y;
+c.width = x;
+
 var canvas = new fabric.Canvas('first');
 fabric.Image.fromURL(imgurl.src,function(oimg){
     oimg.scaleX=canvas.width / imgurl.width;
