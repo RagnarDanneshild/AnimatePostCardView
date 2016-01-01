@@ -46,6 +46,7 @@ def save(request):
     return HttpResponse('it s ok')
 
 def edit(request,templnum = '',id = 0):
+    item = PostCard.objects.get(picture_url=templnum)
     if templnum != '' :
         if request.is_ajax():
             s=serializers.serialize('json',[PostCard.objects.get(picture_url=templnum)])
