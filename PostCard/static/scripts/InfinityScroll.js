@@ -1,8 +1,10 @@
 /**
  * Created by Pawel on 30.12.2015.
  */
-var coff=4;
+var coff=2;
 $(document).ready(function(){
+
+    if (window.location.pathname!='/')return  0;
   var screenHeight = $(window).height();
 
   $(window).scroll(function()
@@ -11,7 +13,7 @@ $(document).ready(function(){
       var divHeight = $("#imgContainer").height();
       var totalHeight = screenHeight + scroll;
       var left = divHeight - totalHeight;
-      if (left < 10)
+      if (left < 10 && left>-120)
         moreData();
     });
 });
