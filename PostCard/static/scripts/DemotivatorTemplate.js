@@ -42,7 +42,7 @@ function init()
 
          getImage(item.fields.picture_url,
          function(url){
-            $( "#imgContainer").append(getView(url,item.pk,item.fields.name,item.fields.user));
+            $( "#imgContainer").append(getView(url,item.pk,item.fields.name,item.fields.user,item.fields.rating));
          }
          );
    //     element.appendTo( "#imgContainer" );
@@ -62,7 +62,7 @@ function initUserCard()
 
          getImage(item.fields.picture_url,
          function(url){
-            $( "#UserimgContainer").append(getView(url,item.pk));
+            $( "#UserimgContainer").append(getView(url,item.pk,item.fields.name,item.fields.user,item.fields.rating));
          }
          );
    //     element.appendTo( "#imgContainer" );

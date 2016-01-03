@@ -99,10 +99,8 @@ def rate(request):
             postcard=PostCard.objects.get(id=int(request.POST['id']))
             obj,create=PostCardRating.objects.update_or_create(user=user,post_card=postcard,defaults={'rate':rating})
             if(create):
-                print('ds')
                 postcard.update_rating(rating,create)
             else:
-                print('hh')
                 postcard.update_rating(rating-obj.prev_rate,create)
 
             data['rating']=postcard.rating

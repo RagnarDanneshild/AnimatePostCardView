@@ -32,22 +32,20 @@ class PostCard(models.Model):
     picture_url = models.CharField(max_length=40)
     canvas=JSONField()
     name = models.CharField(max_length=20,default='noname')
-    rating=models.IntegerField(default=0)
+    rating=models.FloatField(default=0)
     like_num = models.IntegerField(default=0)
     tag_field = models.TextField()
     creation_date = models.DateTimeField(auto_now_add=True)
 
     def update_rating(self,new_one,status):
         if (status):
-            self.rating+=new_one
+            self.rating=(self.rating*self.like_num+new_one)/(self.like_num+1)
             self.like_num+=1
         else:
-            self.rating += new_one
+            self.rating =(self.rating*self.like_num+new_one)/self.like_num
         self.save()
 
 
-    def get_rating(self):
-        return float(self.rating/self.like_num)
 
 class PostcardComments(models.Model):
 
