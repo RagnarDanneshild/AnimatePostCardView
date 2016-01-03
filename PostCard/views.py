@@ -46,6 +46,7 @@ def save(request):
     return HttpResponse('it s ok')
 
 def edit(request,templnum = '',id = 0):
+
     if templnum != '' :
         if request.is_ajax():
             s=serializers.serialize('json',[PostCard.objects.get(picture_url=templnum)])
@@ -67,14 +68,14 @@ def save_post_card(request):
     return HttpResponse('it s ok')
 
 def getList(request,num=4):
-    slist = PostCard.objects.all()
+    slist = PostCard.objects.all().order_by('-creation_date')
     mass = []
     for item in slist:
         if 'template' not in item.picture_url:
             mass.append(item)
     if request.is_ajax():
         if(request.GET.get('user')==None):
-            data = serializers.serialize("json", mass[int(num): int(num)+5])
+            data = serializers.serialize("json", mass[int(num): int(num)+2])
 
         else:
             data=serializers.serialize("json",PostCard.objects.filter(user=request.user))
@@ -86,3 +87,36 @@ def showPostCard(request,id=1):
         return HttpResponse(s, content_type='application/json')
     else:
         return render(request,'PostCardView.html')
+
+
+def rate(request):
+    data={}
+    if request.is_ajax():
+        user=request.user
+        if(request.POST):
+            rating =int(request.POST['value'])
+
+            postcard=PostCard.objects.get(id=int(request.POST['id']))
+            obj,create=PostCardRating.objects.update_or_create(user=user,post_card=postcard,defaults={'rate':rating})
+            if(create):
+                print('ds')
+                postcard.update_rating(rating,create)
+            else:
+                print('hh')
+                postcard.update_rating(rating-obj.prev_rate,create)
+
+            data['rating']=postcard.rating
+            data['vote_num']=postcard.like_num
+
+
+        if request.GET:
+            postcard=PostCard.objects.get(id=int(request.GET.get('id')))
+            obj=PostCardRating.objects.filter(user=user,post_card=postcard)
+            data['rating']=postcard.rating
+            data['vote_num'] = postcard.like_num
+            if obj.exists():
+                data['user_rate']=obj[0].rate
+            else:
+                data['user_rate']=0
+
+    return HttpResponse(json.dumps(data), content_type = "application/json")

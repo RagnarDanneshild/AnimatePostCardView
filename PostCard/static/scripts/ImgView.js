@@ -4,8 +4,10 @@
 function getView(url,id,name,user) {
     var usr = document.getElementById("username").value;
     if (usr == user){
-        return "<div class='imgView' id='"+id+"'>" +
+        return "<div class='imgView' id='"+id+"'>"+
+
         "<a href='/postcard/"+id+"'><h3 class='full_view'>"+name+"</h3></a>"+
+
         "<a href='/edit/"+id+"'><h3 class='full_view'>Edit</h3></a>"+
         "<img src='"+url+"'/>"+
         "</div>"

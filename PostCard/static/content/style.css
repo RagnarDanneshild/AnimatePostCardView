@@ -87,3 +87,12 @@
 {
 
 }
+
+ .b-rating__count {
+    font-size: 21px;
+}
+.b-rating   {
+    list-style: none;
+    text-align: center;
+}
+
