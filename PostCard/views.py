@@ -8,6 +8,7 @@ from django.shortcuts import render_to_response
 from PostCard.models import *
 from django.views.generic import TemplateView
 from django.core import serializers
+from PostCard.check_badges import *
 import json
 # Create your views here. f
 
@@ -117,4 +118,15 @@ def rate(request):
             else:
                 data['user_rate']=0
 
+    return HttpResponse(json.dumps(data), content_type = "application/json")
+
+
+def checkbudges(request):
+    user=UserInfo.objects.get(user=request.user)
+    data={}
+    data['1']=registerBadge(user)
+    data['2']=createdPostCard1(user)
+    data['3']=createdPostCard10(user)
+    data['4']=top_user(user)
+    data['5']=mark_user(user)
     return HttpResponse(json.dumps(data), content_type = "application/json")
