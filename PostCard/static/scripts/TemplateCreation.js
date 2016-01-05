@@ -3,8 +3,8 @@
  */
 var canvasWrapper, handleDragEnd, handleDragEnter, handleDragLeave, handleDragOver, handleDragStart, handleDrop, images, loadOneImage, noStandartDrop, upObject;
 var selectedObject,canlen;
-//var imgurl = new Image();
-//imgurl.src= $('#3Image').attr("src");
+var imgurl = new Image();
+imgurl.src= $('#3Image').attr("src");
 
 var canvas = new fabric.Canvas('first');
 
