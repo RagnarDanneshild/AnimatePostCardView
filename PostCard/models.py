@@ -2,6 +2,9 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save, pre_save
 from jsonfield import JSONField
+from tagging.fields import TagField
+
+
 # Create your models here.ага
 
 
@@ -34,7 +37,7 @@ class PostCard(models.Model):
     name = models.CharField(max_length=20,default='noname')
     rating=models.FloatField(default=0)
     like_num = models.IntegerField(default=0)
-    tag_field = models.TextField()
+    tags = TagField()
     creation_date = models.DateTimeField(auto_now_add=True)
 
     def update_rating(self,new_one,status):

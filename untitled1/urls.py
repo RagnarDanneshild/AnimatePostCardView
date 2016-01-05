@@ -29,6 +29,8 @@ urlpatterns = [
     url(r'^edit/(?P<id>[0-9]+)/$','PostCard.views.edit'),
     url(r'^createnew/(?P<templnum>\w+)/$','PostCard.views.edit'),
     url(r'^rate$','PostCard.views.rate'),
-    url(r'^checkBadges$','PostCard.views.checkbudges')
+    url(r'^checkBadges$','PostCard.views.checkbudges'),
+
+
 
 ]
