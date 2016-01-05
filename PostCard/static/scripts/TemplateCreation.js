@@ -3,8 +3,6 @@
  */
 var canvasWrapper, handleDragEnd, handleDragEnter, handleDragLeave, handleDragOver, handleDragStart, handleDrop, images, loadOneImage, noStandartDrop, upObject;
 var selectedObject,canlen;
-var imgurl = new Image();
-imgurl.src= $('#3Image').attr("src");
 
 var canvas = new fabric.Canvas('first');
 
@@ -36,27 +34,17 @@ function load(){
     canvas.renderAll.bind(canvas);
 }
 canvas.controlsAboveOverlay = true;
-//textfield.set({left:300,top:100});
+canvas.selection = false;
 
 upObject = function() {
     selectedObject = canvas.getActiveObject();
-    if(canvas.getActiveGroup())
-        selectedObject = canvas.getActiveGroup();
     selectedObject.bringForward();
 };
 
 downObject = function() {
     selectedObject = canvas.getActiveObject();
-    var activeObject = canvas.getActiveObject();
-    var activeGroup = canvas.getActiveGroup();
-    if(activeObject){
-        activeObject.sendBackwards();
-        canvas.renderAll();
-    }
-    else if(activeGroup){
-        activeGroup.sendBackwards();
-        canvas.renderAll();
-    }
+    selectedObject.sendBackwards();
+
 };
 
 createTextField = function(){
@@ -90,12 +78,14 @@ changeColor = function(val){
     setStyle(obj,'fill',val);
     canvas.renderAll();
 };
+
 $('#setfontfamily').change(function() {
     var val = $("#setfontfamily option:selected").text();
     var obj = canvas.getActiveObject();
     setStyle(obj,'fontFamily',val);
     canvas.renderAll();
 });
+
 loadOneImage = function(img, newImage) {
   img = document.querySelector('#images img.img_dragging');
   newImage = new fabric.Image(img, {
@@ -129,7 +119,6 @@ handleDragStart = function(e) {
   return this.classList.add('img_dragging');
 };
 
-
 handleDragOver = function(e) {
   if (e.preventDefault) {
     e.preventDefault();
@@ -146,9 +135,7 @@ handleDragLeave = function(e) {
   return this.classList.remove('over');
 };
 
-
 canvasWrapper = document.getElementById('mainblock');
-
 
 handleDrop = function(e) {
   var f, files, i, img, newImage, reader;
@@ -194,7 +181,6 @@ handleDrop = function(e) {
     loadOneImage(img, newImage);
     canvas.add(newImage);
   }
-  //updateLayers(canvas.getObjects());
   return false;
 };
 
@@ -227,7 +213,7 @@ canvasWrapper.addEventListener('drop', handleDrop, false);
 $('#savetest').click(function(){
     var button = document.getElementById("savetest");
     button.disabled = true;
-    canvas.deactivateAll();
+    canvas.deactivateAll().renderAll();
     savePicture(canvas,function(data) {
         var postCardName = document.getElementById('postCardName').value;
         if (postCardName != '') {
