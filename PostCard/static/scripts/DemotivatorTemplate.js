@@ -25,10 +25,7 @@ $('#savesmt').click(function()
         $.post('/savePostCard',{json:JSON.stringify(canvas),url:data})
             .done(function(data){ alert('its ok');});
        });
-
- //getImage('/Public/the_image1.png','#test');
-
-        }
+    }
 );
 
 //
@@ -38,38 +35,27 @@ $('#savesmt').click(function()
 function init()
 {
     $.get('/getListOfPicture/0',function(data){
-     $.each( data, function( i, item ) {
-
-         getImage(item.fields.picture_url,
-         function(url){
-            $( "#imgContainer").append(getView(url,item.pk,item.fields.name,item.fields.user,item.fields.rating));
-         }
-         );
-   //     element.appendTo( "#imgContainer" );
-
-
+        $.each( data, function( i, item ) {
+             getImage(item.fields.picture_url,
+             function(url){
+                $( "#imgContainer").append(getView(url,item.pk,item.fields.name,item.fields.user,item.fields.rating,'false'));
+            }
+            );
+        });
     });
+};
 
-
-
-});};
 
 
 function initUserCard()
 {
     $.get('/getListOfPicture/4',{user:true},function(data){
-     $.each( data, function( i, item ) {
-
-         getImage(item.fields.picture_url,
-         function(url){
-            $( "#UserimgContainer").append(getView(url,item.pk,item.fields.name,item.fields.user,item.fields.rating));
-         }
-         );
-   //     element.appendTo( "#imgContainer" );
-
-
+        $.each( data, function( i, item ) {
+            getImage(item.fields.picture_url,
+            function(url){
+               $( "#UserimgContainer").append(getView(url,item.pk,item.fields.name,item.fields.user,item.fields.rating,'false'));
+            }
+            );
+        });
     });
-
-
-
-});};
+};

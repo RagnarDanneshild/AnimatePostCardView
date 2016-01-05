@@ -24,10 +24,10 @@ $(document).ready(function(){
      $.each( data, function( i, item ) {
          getImage(item.fields.picture_url,
          function(url){
-            $( "#imgContainer").append(getView(url,item.pk,item.fields.name,item.fields.user));
+            $( "#imgContainer").append(getView(url,item.pk,item.fields.name,item.fields.user,item.fields.rating));
          }
          );
     });
  });
-     coff=coff+2;
+     coff=coff+4;
  }

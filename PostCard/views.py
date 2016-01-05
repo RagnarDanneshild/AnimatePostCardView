@@ -12,6 +12,7 @@ from PostCard.check_badges import *
 import json
 # Create your views here. f
 
+
 class Home(TemplateView):
    template_name='index.html'
 
@@ -30,6 +31,7 @@ def profile(request):
           )
     )
 
+
 class edit(TemplateView):
    template_name='edit.html'
 
@@ -39,18 +41,28 @@ def save(request):
         post_card = PostCard(user=request.user, canvas=request.POST['json'], picture_url=request.POST['url'],name=request.POST['name'])
         if PostCard.objects.filter(name=request.POST['name']).exists():
             oldpost_card = PostCard.objects.get(name=request.POST['name'])
-            oldpost_card.canvas = request.POST['json']
-            oldpost_card.picture_url = request.POST['url']
-            oldpost_card.save()
+            if oldpost_card.user == request.user:
+                oldpost_card.canvas = request.POST['json']
+                oldpost_card.picture_url = request.POST['url']
+                oldpost_card.save()
+            else:
+                HttpResponse('this is not yourst postcard')
         else:
             post_card.save()
     return HttpResponse('it s ok')
 
-def edit(request,templnum = '',id = 0):
 
-    if templnum != '' :
+def savetemplate(request):
+    if request.is_ajax():
+        post_card = PostCard(user=request.user, canvas=request.POST['json'], picture_url=request.POST['url'])
+        post_card.save()
+    return HttpResponse('it s ok')
+
+
+def edit(request, templnum='', id=0):
+    if templnum != '':
         if request.is_ajax():
-            s=serializers.serialize('json',[PostCard.objects.get(picture_url=templnum)])
+            s = serializers.serialize('json',[PostCard.objects.get(picture_url=templnum)])
             return HttpResponse(s, content_type='application/json')
         else:
             return render(request,'edit.html')
@@ -61,6 +73,7 @@ def edit(request,templnum = '',id = 0):
         else:
             return render(request,'edit.html')
 
+
 def save_post_card(request):
     if request.is_ajax():
         post_card = PostCard(user=request.user,canvas=request.POST['json'],picture_url=request.POST['url'])
@@ -68,18 +81,25 @@ def save_post_card(request):
 
     return HttpResponse('it s ok')
 
-def getList(request,num=4):
-    slist = PostCard.objects.all().order_by('-creation_date')
-    mass = []
-    for item in slist:
-        if 'template' not in item.picture_url:
-            mass.append(item)
-    if request.is_ajax():
-        if(request.GET.get('user')==None):
-            data = serializers.serialize("json", mass[int(num): int(num)+2])
 
+def getlist(request, num=-1):
+    if request.is_ajax():
+        slist = PostCard.objects.all().order_by('-creation_date')
+        mass = []
+        print(num)
+        if num == -1:
+            for item in slist:
+                if 'template' in item.picture_url:
+                    mass.append(item)
+            data = serializers.serialize("json", mass)
         else:
-            data=serializers.serialize("json",PostCard.objects.filter(user=request.user))
+            for item in slist:
+                if 'template' not in item.picture_url:
+                    mass.append(item)
+            if(request.GET.get('user')==None):
+                data = serializers.serialize("json", mass[int(num): int(num)+2])
+            else:
+                data=serializers.serialize("json",PostCard.objects.filter(user=request.user))
     return HttpResponse(data, content_type='application/json')
 
 def showPostCard(request,id=1):
