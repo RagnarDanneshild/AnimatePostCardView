@@ -8,102 +8,17 @@ var canvasWrapper, handleDragEnd, handleDragEnter, handleDragLeave, handleDragOv
 
 var selectedObject,canlen;
 var c = document.getElementById('first');
-var imgurl = new Image();
-imgurl.src= $('#3Image').attr("src");
-var x = imgurl.width;
-var y = imgurl.height;
-if(x>800){
-    var n = 800/x;
-    x = 800;
-    y = y*n;
-}
-if(y>600) {
-    var nn = 600 / y;
-    y = 600;
-    x = x * nn;
-}
-// if it not working then set canvas.setHeight\width properties
-c.height = y;
-c.width = x;
-
 var canvas = new fabric.Canvas('first');
-fabric.Image.fromURL(imgurl.src,function(oimg){
-    oimg.scaleX=canvas.width / imgurl.width;
-    oimg.scaleY= canvas.height / imgurl.height;
-    oimg.selectable = false;
-    oimg.evented = false;
-    canvas.add(oimg);
-})
 
-
-//textfield.set({left:300,top:100});
-
-upObject = function() {
-    selectedObject = canvas.getActiveObject();
-  selectedObject.bringForward();
-};
-
-downObject = function() {
-    selectedObject = canvas.getActiveObject();
-  selectedObject.sendBackwards();
-};
-
-createTextField = function(){
-    var textfield = new fabric.IText('New Text Field', {
-    fontFamily: 'arial black',
-    fontSize:30,
-    left: 400,
-    top: 300 ,
-    });
-    textfield.on('mouseup', function(options) {
-    if(options.e.pageY<=canvas.wrapperEl.offsetTop||options.e.pageY>=(canvas.height+canvas.wrapperEl.offsetTop)||options.e.pageX<=canvas.wrapperEl.offsetLeft||options.e.pageX>=(canvas.width+canvas.wrapperEl.offsetLeft)) {
-        canvas.remove(this);
-    }
-    });
-    canvas.add(textfield);
-};
-
-function setStyle(object, styleName, value) {
-    if (object.setSelectionStyles && object.isEditing) {
-        var style = {};
-        style[styleName] = value;
-        object.setSelectionStyles(style);
-    }
-    else {
-        object[styleName] = value;
-    }
-}
-
-changeColor = function(val){
-    var obj = canvas.getActiveObject();
-    setStyle(obj,'fill',val);
-    canvas.renderAll();
-};
-$('#setfontfamily').change(function() {
-    var val = $("#setfontfamily option:selected").text();
-    var obj = canvas.getActiveObject();
-    setStyle(obj,'fontFamily',val);
-    canvas.renderAll();
-});
 loadOneImage = function(img, newImage) {
   img = document.querySelector('#images img.img_dragging');
   newImage = new fabric.Image(img, {
     width: img.width,
     height: img.height,
-    left: e.layerX,
-    top: e.layerY
+    left: 0,
+    top: 0
   });
-    newImage.on('mouseup', function() {
-    this.off('mousedown');
-     if(options.e.pageY<=canvas.wrapperEl.offsetTop||options.e.pageY>=(canvas.height+canvas.wrapperEl.offsetTop)||options.e.pageX<=canvas.wrapperEl.offsetLeft||options.e.pageX>=(canvas.width+canvas.wrapperEl.offsetLeft)) {
-        canvas.remove(this);
-    }
-    });
-     if(newImage.width>=canvas.width-100 || newImage.height>=canvas.height-100)
-            {
-                var val = (canvas.width/2) / newImage.width;
-                newImage.scale(val);
-            };
+     setScale(newImage);
 };
 
 noStandartDrop = function(e) {
@@ -135,9 +50,32 @@ handleDragLeave = function(e) {
   return this.classList.remove('over');
 };
 
-
 canvasWrapper = document.getElementById('mainblock');
 
+setScale = function(e){
+     var x = e.width;
+            var y = e.height;
+            var scale1,scale2;
+            if(x>800){
+                scale1 = 800/x;
+                x = 800;
+                y = y*scale1;
+            }
+            if(y>600) {
+                scale2 = 600 / y;
+                y = 600;
+                x = x * scale2;
+            }
+            if(x!=0 && y!=0){
+                canvas.setHeight(y);
+                canvas.setWidth(x);
+            }
+
+            e.scaleX=canvas.width / e.width;
+            e.scaleY= canvas.height / e.height;
+            e.selectable = false;
+            e.evented = false;
+}
 
 handleDrop = function(e) {
   var f, files, i, img, newImage, reader;
@@ -154,25 +92,18 @@ handleDrop = function(e) {
           var img;
 		  img = document.createElement('img');
           img.src = evt.target.result;
-          newImage = new fabric.Image(img, {
-            width: img.width,
-            height: img.height,
-            left: e.layerX,
-            top: e.layerY
-          });
-            newImage.on('mouseup', function() {
-            this.off('mousedown');
-             if(options.e.pageY<=canvas.wrapperEl.offsetTop||options.e.pageY>=(canvas.height+canvas.wrapperEl.offsetTop)||options.e.pageX<=canvas.wrapperEl.offsetLeft||options.e.pageX>=(canvas.width+canvas.wrapperEl.offsetLeft)) {
-                 canvas.remove(this);
-             }
-            });
-            if(newImage.width>=canvas.width-100 || newImage.height>=canvas.height-100)
-            {
-                var val = (canvas.width/2) / newImage.width;
-                newImage.scale(val);
-            };
-          return canvas.add(newImage);
+          img.onload =function(){
+              newImage = new fabric.Image(img, {
+              width: img.width,
+              height: img.height,
+              left: 0,
+              top: 0
+              });
+              setScale(newImage);
+              canvas.add(newImage);
+          }
         };
+          canvas.renderAll(canvas);
         reader.readAsDataURL(f);
       }
       i++;
@@ -181,7 +112,6 @@ handleDrop = function(e) {
     loadOneImage(img, newImage);
     canvas.add(newImage);
   }
-  updateLayers(canvas.getObjects());
   return false;
 };
 
@@ -211,3 +141,23 @@ canvasWrapper.addEventListener('dragover', handleDragOver, false);
 
 canvasWrapper.addEventListener('drop', handleDrop, false);
 
+$('#savetest').click(function(){
+    var button = document.getElementById("savetest");
+    button.disabled = true;
+    savePicture(canvas,function(data) {
+        var postCardName = document.getElementById('postCardName').value;
+        if (postCardName != '') {
+            var jsn = canvas.toJSON(['selectable', 'evented']);
+            $.post('/save', {json: JSON.stringify(jsn), url: data, name: postCardName})
+                .done(function (data) {
+                    button.disabled = false;
+                    alert('its ok');
+                });
+        }
+        else{
+            button.disabled = false;
+            alert('Enter Postcard Name!')
+        }
+    });
+    button.disabled = false;
+});

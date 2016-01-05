@@ -3,12 +3,12 @@
  */
 function getView(url,id,name,user,rating,onlytemplates) {
     var usr = document.getElementById("username").value;
-    if (onlytemplates =='true'){
-        return "<div class='imgView' id='"+id+"'>"+
-            "<img id ='selectTempalte' src='"+url+"'/>"+
+    if (user =='true'){
+        return "<div class='templateView' id='"+name+"'>"+
+            "<img id = 'selectTemplate' src='"+url+"' style='max-height: 300px; max-width: 300px;'/>"+
         "</div>"
     }
-    else if (usr == user && onlytemplates !="true"){
+    else if (usr == user){
         return "<div class='imgView' id='"+id+"'>"+
         "<a href='/postcard/"+id+"'><h3 class='full_view'>"+name+"</h3></a>"+
                 "<kbd class='full_view'>PostCard Rating "+ rating+" </kbd>"+
@@ -16,16 +16,17 @@ function getView(url,id,name,user,rating,onlytemplates) {
         "<img src='"+url+"'/>"+
         "</div>"
     }
-    else if(onlytemplates !='true'){
+    else if(usr != user){
         return "<div class='imgView' id='"+id+"'>" +
         "<a href='/postcard/"+id+"'><h3 class='full_view'>"+name+"</h3></a>"+
             "<kbd class='full_view'> Rating "+ rating+" </kbd>"+
         "<img src='"+url+"'/>"+
         "</div>"
     }
+
 }
-$("#selectTemplate").click(function(){
-    window.location = "/createnew/"+$(this).val();
+$("#templateContainer").on("click",".templateView",function(){
+    window.location = "/createnew/"+$(this).attr('id');
 });
 
 function initCanvas()

@@ -9,6 +9,10 @@ imgurl.src= $('#3Image').attr("src");
 var canvas = new fabric.Canvas('first');
 
 $.get(window.location.pathname, function(data) {
+        if(data[0].fields.user){
+             var postCardName = document.getElementById('postCardName');
+            postCardName.setAttribute('value',data[0].fields.name);
+        }
         canvas.loadFromJSON(JSON.parse(data[0].fields.canvas),load,function(o, object) {
             canvas.add(object);
         });
@@ -36,12 +40,23 @@ canvas.controlsAboveOverlay = true;
 
 upObject = function() {
     selectedObject = canvas.getActiveObject();
-  selectedObject.bringForward();
+    if(canvas.getActiveGroup())
+        selectedObject = canvas.getActiveGroup();
+    selectedObject.bringForward();
 };
 
 downObject = function() {
     selectedObject = canvas.getActiveObject();
-  selectedObject.sendBackwards();
+    var activeObject = canvas.getActiveObject();
+    var activeGroup = canvas.getActiveGroup();
+    if(activeObject){
+        activeObject.sendBackwards();
+        canvas.renderAll();
+    }
+    else if(activeGroup){
+        activeGroup.sendBackwards();
+        canvas.renderAll();
+    }
 };
 
 createTextField = function(){
@@ -150,13 +165,14 @@ handleDrop = function(e) {
           var img;
 		  img = document.createElement('img');
           img.src = evt.target.result;
-          newImage = new fabric.Image(img, {
+          img.onload =function(){
+            newImage = new fabric.Image(img, {
             width: img.width,
             height: img.height,
             left: e.layerX,
             top: e.layerY
-          });
-            newImage.on('mouseup', function(options) {
+              });
+              newImage.on('mouseup', function(options) {
             this.off('mousedown');
              if(options.e.pageY<=canvas.wrapperEl.offsetTop||options.e.pageY>=(canvas.height+canvas.wrapperEl.offsetTop)||options.e.pageX<=canvas.wrapperEl.offsetLeft||options.e.pageX>=(canvas.width+canvas.wrapperEl.offsetLeft)) {
                  canvas.remove(this);
@@ -167,7 +183,8 @@ handleDrop = function(e) {
                 var val = (canvas.width/2) / newImage.width;
                 newImage.scale(val);
             };
-          return canvas.add(newImage);
+              canvas.add(newImage);
+          }
         };
         reader.readAsDataURL(f);
       }
@@ -210,6 +227,7 @@ canvasWrapper.addEventListener('drop', handleDrop, false);
 $('#savetest').click(function(){
     var button = document.getElementById("savetest");
     button.disabled = true;
+    canvas.deactivateAll();
     savePicture(canvas,function(data) {
         var postCardName = document.getElementById('postCardName').value;
         if (postCardName != '') {
@@ -225,4 +243,5 @@ $('#savetest').click(function(){
             alert('Enter Postcard Name!')
         }
     });
+    button.disabled = false;
 });

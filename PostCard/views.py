@@ -54,15 +54,15 @@ def save(request):
 
 def savetemplate(request):
     if request.is_ajax():
-        post_card = PostCard(user=request.user, canvas=request.POST['json'], picture_url=request.POST['url'])
-        post_card.save()
+        template = Template(canvas=request.POST['json'], template_url=request.POST['url'],name=request.POST['name'])
+        template.save()
     return HttpResponse('it s ok')
 
 
 def edit(request, templnum='', id=0):
     if templnum != '':
         if request.is_ajax():
-            s = serializers.serialize('json',[PostCard.objects.get(picture_url=templnum)])
+            s = serializers.serialize('json',[Template.objects.get(name=templnum)])
             return HttpResponse(s, content_type='application/json')
         else:
             return render(request,'edit.html')
@@ -84,23 +84,19 @@ def save_post_card(request):
 
 def getlist(request, num=-1):
     if request.is_ajax():
-        slist = PostCard.objects.all().order_by('-creation_date')
-        mass = []
-        print(num)
         if num == -1:
-            for item in slist:
-                if 'template' in item.picture_url:
-                    mass.append(item)
-            data = serializers.serialize("json", mass)
+            tlist = Template.objects.all();
+            data = serializers.serialize("json", tlist)
         else:
+            slist = PostCard.objects.all().order_by('-creation_date')
             for item in slist:
-                if 'template' not in item.picture_url:
-                    mass.append(item)
-            if(request.GET.get('user')==None):
-                data = serializers.serialize("json", mass[int(num): int(num)+2])
+                print (item.id)
+            if request.GET.get('user')==None:
+                data = serializers.serialize("json", slist[int(num): int(num)+2])
             else:
                 data=serializers.serialize("json",PostCard.objects.filter(user=request.user))
     return HttpResponse(data, content_type='application/json')
+
 
 def showPostCard(request,id=1):
     if request.is_ajax():
