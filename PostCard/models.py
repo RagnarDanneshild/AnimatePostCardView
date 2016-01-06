@@ -9,7 +9,6 @@ from tagging.models import Tag
 
 
 class UserInfo(models.Model):
-
     user = models.OneToOneField(User,primary_key=True)
     avatar = models.URLField()
     description = models.TextField()
@@ -21,33 +20,30 @@ class UserInfo(models.Model):
     rate = models.IntegerField(default=0)
 
 
-
-
 class Template(models.Model):
-    name = models.CharField(max_length=15)
-    descripton = models.TextField()
-    template_url = models.URLField()
+    name = models.CharField(max_length=20)
+    canvas = JSONField()
+    template_url = models.CharField(max_length=40)
 
 
 class PostCard(models.Model):
 
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     picture_url = models.CharField(max_length=40)
-    canvas=JSONField()
-    name = models.CharField(max_length=20,default='noname')
-    rating=models.FloatField(default=0)
+    canvas = JSONField()
+    name = models.CharField(max_length=20)
+    rating = models.FloatField(default=0)
     like_num = models.IntegerField(default=0)
     tags = TagField()
     creation_date = models.DateTimeField(auto_now_add=True)
 
-    def update_rating(self,new_one,status):
+    def update_rating(self, new_one, status):
         if (status):
-            self.rating=(self.rating*self.like_num+new_one)/(self.like_num+1)
-            self.like_num+=1
+            self.rating = (self.rating*self.like_num+new_one)/(self.like_num+1)
+            self.like_num += 1
         else:
             self.rating =(self.rating*self.like_num+new_one)/self.like_num
         self.save()
-
 
 
 class PostcardComments(models.Model):
@@ -60,13 +56,10 @@ class PostcardComments(models.Model):
 
 
 class PostCardRating(models.Model):
-    post_card=models.ForeignKey(PostCard,on_delete=models.CASCADE)
-    user=models.ForeignKey(User,on_delete=models.CASCADE)
-    rate=models.IntegerField(default=0)
-    prev_rate=models.IntegerField(default=0)
-
-
-
+    post_card = models.ForeignKey(PostCard,on_delete=models.CASCADE)
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    rate = models.IntegerField(default=0)
+    prev_rate = models.IntegerField(default=0)
 
 
 class UserAchievement(models.Model):

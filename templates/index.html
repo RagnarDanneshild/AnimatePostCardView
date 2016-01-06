@@ -7,28 +7,18 @@
 {% include 'CreatePostCardButton.html' %}
     </div>
 <div class="container">
-{% load tagging_tags %}
-
-    {% tag_cloud_for_model PostCard.PostCard as tags with steps=20 min_count=1 distribution=log %}
-    {% for tag in tags %}
-
-        <a href="/tag/{{ tag.name }}" title="{{ tag.count }}">{{ tag.name }}</a>
-
-    {% endfor %}
-
-
-<div class="row">
-     <div class="col-md-2">
-         </div>
-    <div class="col-md-6">
-    <div id="imgContainer">
-    </div>
+    <div class="row">
+         <div class="col-md-2">
+            </div>
+        <div class="col-md-6">
+            <div id="imgContainer">
+            </div>
         </div>
     </div>
-    </div>
+</div>
 {%  endblock %}
 {%  block scripts %}
 <script>
-init()
-        </script>
+    init()
+</script>
 {% endblock %}
