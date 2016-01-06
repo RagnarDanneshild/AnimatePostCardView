@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpRequest,HttpResponse
 from django.template import RequestContext
+from tagging.models import TaggedItem
+
 from PostCard.models import *
 from PostCard.forms import UserProfileForm
 from django.forms import modelformset_factory
@@ -37,22 +39,19 @@ class edit(TemplateView):
 
 
 def save(request):
-    print('a')
     if request.is_ajax():
-        print('b')
-        post_card = PostCard(user=request.user, canvas=request.POST['json'], picture_url=request.POST['url'], name=request.POST['name'])
+        post_card = PostCard(user=request.user, canvas=request.POST['json'], picture_url=request.POST['url'],name=request.POST['name'], tags=request.POST.get('tags'))
+
         if PostCard.objects.filter(name=request.POST['name']).exists():
             oldpost_card = PostCard.objects.get(name=request.POST['name'])
-            if oldpost_card.user == request.user:
-                oldpost_card.canvas = request.POST['json']
-                oldpost_card.picture_url = request.POST['url']
-                oldpost_card.save()
-            else:
-                HttpResponse('this is not yours postcard')
+            oldpost_card.canvas = request.POST['json']
+            oldpost_card.picture_url = request.POST['url']
+            oldpost_card.tags=request.POST.get('tags')
+            oldpost_card.save()
         else:
             post_card.save()
-            print('d')
     return HttpResponse('it s ok')
+
 
 
 def savetemplate(request):
@@ -145,3 +144,7 @@ def checkbudges(request):
     data['4']=top_user(user)
     data['5']=mark_user(user)
     return HttpResponse(json.dumps(data), content_type = "application/json")
+
+def tag_view(request,tag):
+    data=serializers.serialize('json',TaggedItem.objects.get_by_model(PostCard))
+    return render(request, 'index.html')
