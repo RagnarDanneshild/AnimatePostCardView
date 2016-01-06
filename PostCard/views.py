@@ -48,6 +48,7 @@ def save(request):
             oldpost_card.picture_url = request.POST['url']
             oldpost_card.tags=request.POST.get('tags')
             oldpost_card.save()
+
         else:
             post_card.save()
     return HttpResponse('it s ok')
