@@ -214,7 +214,7 @@ $('#savetest').click(function(){
         var postCardName = document.getElementById('postCardName').value;
         if (postCardName != '') {
             var jsn = canvas.toJSON(['selectable', 'evented']);
-            $.post('/save', {json: JSON.stringify(jsn), url: data, name: postCardName})
+            $.post('/save', {json: JSON.stringify(jsn), url: data, name: postCardName, tags:JSON.stringify($('#myTags').tagit('assignedTags'))})
                 .done(function (data) {
                     button.disabled = false;
                     alert('its ok');

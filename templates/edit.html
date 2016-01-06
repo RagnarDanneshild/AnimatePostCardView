@@ -10,9 +10,10 @@
     <div>
 			<span>Post Card Name </span>
 			<input type="text" name='Model Save' id = 'postCardName' text = ''>
+
     <ul id="myTags">
 
-</ul>
+    </ul>
 
     </div>
     <div class='container' id = 'mainblock'>
@@ -35,11 +36,18 @@
 
 {% block scripts %}
 <script type="text/javascript">
-    $(document).ready(function() {
-        $("#myTags").tagit();
+            var sampleTags = ['c++', 'java', 'php', 'coldfusion', 'javascript', 'asp', 'ruby', 'python', 'c', 'scala', 'groovy', 'haskell', 'perl', 'erlang', 'apl', 'cobol', 'go', 'lua'];
+
+    $(document).ready(function() {$("#myTags").tagit({
+              availableTags: sampleTags,
+
+
+
+
+        });
     });
 
-  $('#myTags').tagit('assignedTags')
+
 
 </script>
 

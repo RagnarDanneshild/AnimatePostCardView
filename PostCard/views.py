@@ -10,6 +10,7 @@ from django.views.generic import TemplateView
 from django.core import serializers
 from PostCard.check_badges import *
 import json
+from tagging.models import TaggedItem
 # Create your views here. f
 
 class Home(TemplateView):
@@ -36,11 +37,13 @@ class edit(TemplateView):
 
 def save(request):
     if request.is_ajax():
-        post_card = PostCard(user=request.user, canvas=request.POST['json'], picture_url=request.POST['url'],name=request.POST['name'])
+        post_card = PostCard(user=request.user, canvas=request.POST['json'], picture_url=request.POST['url'],name=request.POST['name'], tags=request.POST.get('tags'))
+
         if PostCard.objects.filter(name=request.POST['name']).exists():
             oldpost_card = PostCard.objects.get(name=request.POST['name'])
             oldpost_card.canvas = request.POST['json']
             oldpost_card.picture_url = request.POST['url']
+            oldpost_card.tags=request.POST.get('tags')
             oldpost_card.save()
         else:
             post_card.save()
@@ -130,3 +133,7 @@ def checkbudges(request):
     data['4']=top_user(user)
     data['5']=mark_user(user)
     return HttpResponse(json.dumps(data), content_type = "application/json")
+
+
+def tag_view(request,tag):
+    data=serializers.serialize('json',TaggedItem.objects.get_by_model(PostCard,tag))
