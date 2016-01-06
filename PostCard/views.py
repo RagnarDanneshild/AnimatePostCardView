@@ -12,6 +12,7 @@ from django.views.generic import TemplateView
 from django.core import serializers
 from PostCard.check_badges import *
 import json
+from django.db.models import Avg
 # Create your views here. f
 
 
@@ -147,5 +148,17 @@ def checkbudges(request):
     return HttpResponse(json.dumps(data), content_type = "application/json")
 
 def tag_view(request,tag):
-    data=serializers.serialize('json',TaggedItem.objects.get_by_model(PostCard))
-    return render(request, 'index.html')
+    if request.is_ajax():
+        data=serializers.serialize('json',TaggedItem.objects.get_by_model(PostCard,tag))
+        return HttpResponse(data, content_type="application/json")
+    else:
+        return render(request, 'tag_view.html')
+
+
+
+def user_rating(request):
+    data={}
+    if request.is_ajax():
+        data['number']=PostCard.objects.filter(user=request.user).count()
+        data['rating']=PostCard.objects.filter(user=request.user).aggregate(Avg('rating'))['rating__avg']
+    return HttpResponse(json.dumps(data), content_type="application/json")

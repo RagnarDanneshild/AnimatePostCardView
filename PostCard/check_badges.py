@@ -15,7 +15,7 @@ def createdPostCard10(userinfo):
 
 
 def top_user(userinfo):
-    return PostCard.objects.filter(user=userinfo.user).count()>=5 and PostCard.objects.filter(user=userinfo.user).aggregate(Avg('rating'))['rating_avg']>4.5
+    return PostCard.objects.filter(user=userinfo.user).count()>=5 and PostCard.objects.filter(user=userinfo.user).aggregate(Avg('rating'))['rating__avg']>4.5
 
 def mark_user(userinfo):
      return PostCardRating.objects.filter(user=userinfo.user).count()>=10
