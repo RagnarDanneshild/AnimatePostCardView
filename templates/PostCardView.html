@@ -2,7 +2,7 @@
 {%  block content %}
 <canvas width="800" height="600" id="viewCanvas"></canvas>
     {% if user.is_authenticated %}
-<div class="rateit bigstars" data-rateit-starwidth="32" data-rateit-starheight="32" data-rateit-step="1" data-rateit-resetable="false"  ></div>
+        <div class="rateit bigstars" data-rateit-starwidth="32" data-rateit-starheight="32" data-rateit-step="1" data-rateit-resetable="false"  ></div>
     {% endif %}
     <div class="voterInfo"><p>Total rating <span id="totalRating"></span>, <span id="numberOfVoters"></span>  users leave they vote already</p> </div>
     <div id="disqus_thread"></div>
@@ -11,7 +11,6 @@
     <script>
     initCanvas();
     initVote();
-
 
 var disqus_config = function () {
     this.page.url = window.location.href; // Replace PAGE_URL with your page's canonical URL variable
@@ -26,9 +25,5 @@ s.src = '//ragnardanneshild.disqus.com/embed.js';
 s.setAttribute('data-timestamp', +new Date());
 (d.head || d.body).appendChild(s);
 })();
-
     </script>
-
-
-
 {%  endblock %}

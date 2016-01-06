@@ -144,20 +144,21 @@ canvasWrapper.addEventListener('drop', handleDrop, false);
 $('#savetest').click(function(){
     var button = document.getElementById("savetest");
     button.disabled = true;
-    savePicture(canvas,function(data) {
-        var postCardName = document.getElementById('postCardName').value;
-        if (postCardName != '') {
-            var jsn = canvas.toJSON(['selectable', 'evented']);
-            $.post('/save', {json: JSON.stringify(jsn), url: data, name: postCardName})
-                .done(function (data) {
-                    button.disabled = false;
-                    alert('its ok');
-                });
-        }
-        else{
-            button.disabled = false;
-            alert('Enter Postcard Name!')
-        }
+    savePicture(canvas,function(pictureurl) {
+        saveCanvas(canvas,function(canvasurl){
+            var postCardName = document.getElementById('postCardName').value;
+            if (postCardName != '') {
+                $.post('/save', {purl: pictureurl,curl: canvasurl, name: postCardName})
+                    .done(function (data) {
+                        button.disabled = false;
+                        alert('its ok');
+                    });
+            }
+            else{
+                button.disabled = false;
+                alert('Enter Postcard Name!')
+            }
+        })
     });
     button.disabled = false;
 });
