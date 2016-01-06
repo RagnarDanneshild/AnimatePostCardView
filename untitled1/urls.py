@@ -25,7 +25,7 @@ urlpatterns = [
     url(r'^getListOfPicture/(?P<num>[0-9]+)/$','PostCard.views.getlist'),
     url(r'^getListOfPicture/templates/$','PostCard.views.getlist'),
     url(r'^postcard/(?P<id>[0-9]+)/$','PostCard.views.showPostCard'),
-    url(r'^save$','PostCard.views.savetemplate'),
+    url(r'^save$','PostCard.views.save'),
     url(r'^edit/(?P<id>[0-9]+)/$','PostCard.views.edit'),
     url(r'^createnew/(?P<templnum>\w+)/$','PostCard.views.edit'),
     url(r'^rate$','PostCard.views.rate'),
