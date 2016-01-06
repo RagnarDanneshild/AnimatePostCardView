@@ -37,9 +37,7 @@ class edit(TemplateView):
 
 
 def save(request):
-    print('a')
     if request.is_ajax():
-        print('b')
         post_card = PostCard(user=request.user, canvas=request.POST['json'], picture_url=request.POST['url'], name=request.POST['name'])
         if PostCard.objects.filter(name=request.POST['name']).exists():
             oldpost_card = PostCard.objects.get(name=request.POST['name'])
@@ -51,7 +49,6 @@ def save(request):
                 HttpResponse('this is not yours postcard')
         else:
             post_card.save()
-            print('d')
     return HttpResponse('it s ok')
 
 
