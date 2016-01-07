@@ -2,6 +2,20 @@
 .contentBlock
 {
     margin-top:60px;
+    background-image: url('http://shmector.com/_ph/17/990955453.png');
+}
+
+#imgContainer a
+{   color: black;
+    text-decoration: none;
+    font: normal 40px Tahoma, Arial, sans-serif;
+    font-family: Tahoma, Arial, sans-serif;
+    line-height: 17px;
+    text-align: left;
+}
+.imgView
+{
+    margin-top:60px;
 }
  .card {
 

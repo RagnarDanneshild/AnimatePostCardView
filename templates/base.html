@@ -19,6 +19,7 @@
     <img src="">
 
 </div>
+
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -27,17 +28,18 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="/" class="navbar-brand">PostCard Editor</a>
+                <a href="#lang-en"class="navbar-brand" onclick="changeLanguage()" lang="en">Switch to Russia</a>
+                <a href="/" class="navbar-brand" lang="en">PostCard Editor</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'home' %}" lang="en">Home</a></li>
 
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     {%  if user.is_authenticated %}
-                        <li><a href="{% url 'profile' %}" class="navbar-brand">Hello {{ user.username }}!</a></li>
-                        <li><a href="{% url 'logout' %}">Logout</a></li>
+                        <li lang="en"><a href="{% url 'profile' %}" class="navbar-brand" >Hello {{ user.username }}!</a></li>
+                        <li><a href="{% url 'logout' %}" lang="en">Logout</a></li>
                         <input id="username" type="hidden" value="{{ user.id }}" />
                     {% else %}
     <li>
@@ -64,6 +66,7 @@
 
 <div class='contentBlock'>
  {% block content %}{% endblock %}
+</div>
 <script>
   window.fbAsyncInit = function() {
     FB.init({
@@ -80,27 +83,52 @@
      js.src = "//connect.facebook.net/en_US/sdk.js";
      fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
-</script>
-    <script src="{% static 'scripts/jquery-1.10.2.min.js' %}"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
 
+
+
+</script>
+
+    <script src="{% static 'lib/jquery-1.10.2.min.js' %}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="{% static 'lib/js.cookie.js' %}"></script>
+    <script src="{% static 'lib/jquery-lang.js' %}"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/dropbox.js/0.10.2/dropbox.min.js"></script>
+    <script src="{% static 'lib/bootstrap.min.js' %}"></script>
+    <script src="{% static 'lib/fabric.min.js' %}"></script>
+    <script src="{% static 'lib/jquery.rateit.min.js' %}"></script>
+    <script src="{% static 'lib/tag-it.min.js' %}"></script>
+
     <script src="{% static 'scripts/dropbox.js' %}"></script>
     <script src="{% static 'scripts/ImgView.js' %}"></script>
     <script src="{% static 'scripts/Crsf_tokenSetup.js' %}"></script>
     <script src="{% static 'scripts/UserProfile.js' %}"></script>
-    <script src="{% static 'scripts/bootstrap.min.js' %}"></script>
-    <script src="{% static 'scripts/fabric.min.js' %}"></script>
-    <script src="{% static 'scripts/DemotivatorTemplate.js' %}"></script>
+    <script src="{% static 'scripts/IniView.js' %}"></script>
     <script src="{% static 'scripts/InfinityScroll.js' %}"></script>
     <script src="{% static 'scripts/TemplateCreation.js' %}"></script>
-    <script src="{% static 'scripts/jquery.rateit.min.js' %}"></script>
     <script src="{% static 'scripts/rating.js' %}"></script>
     <script src="{% static 'scripts/badges.js' %}"></script>
-    <script src="{% static 'scripts/tag-it.min.js' %}"></script>
     <script src="{% static 'scripts/tagview.js' %}"></script>
-   <script src="{% static 'scripts/InitTemplates.js' %}"></script>
-</div>
+    <script src="{% static 'scripts/InitTemplates.js' %}"></script>
+
+<script type="text/javascript">
+    // Create language switcher instance
+    var lang = new Lang();
+       lang.dynamic('ru', '{% static 'language/russian.json' %}');
+    lang.init({
+        defaultLang: 'en'
+    });
+
+
+    function changeLanguage(){
+        if(lang.currentLang=='ru')
+        window.lang.change('en');
+        else
+        window.lang.change('ru');
+        return false;
+    }
+</script>
+
+
 {% block scripts %}{% endblock %}
 </body>
 

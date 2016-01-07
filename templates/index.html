@@ -1,10 +1,13 @@
 {% extends 'base.html' %}
 {%  block content %}
 <div class="jumbotron">
-<p id="username">{{ user.username }}</p>
-
-<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Create New PostCard</button>
+<p lang="en"> Welcome!</p>
+{% if user.is_authenticated %}
+<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" lang="en">Create New PostCard</button>
 {% include 'CreatePostCardButton.html' %}
+    {% else %}
+    <p lang="en"> If you want create your own postcard, please <a href="accounts/register">create your own account</a>, or use <a href="{% url 'social:begin' 'facebook' %}">Facebook</a> or  <a href="{% url 'social:begin' 'vk-oauth2' %}">VK</a></p>
+{%  endif %}
     </div>
 <div class="container">
     <div class="row">
@@ -32,7 +35,7 @@
 {%  endblock %}
 {%  block scripts %}
 <script>
-    init();
+    initGallery();
    inittemplates();
 </script>
 {% endblock %}

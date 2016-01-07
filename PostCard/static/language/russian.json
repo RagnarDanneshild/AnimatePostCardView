@@ -1,0 +1,34 @@
+{
+  "token": {
+    "PostCard Editor": "Редактор Открыток",
+    "Home":"На главную",
+    "Logout":"Выйти",
+    "Choose Template":"Выберите шаблон",
+    "Close":"Закрыть",
+    "Register to save postcard":"Что бы сохранить открытку войдите в свой аккаунт",
+    "Post Card Name":"Название открытки",
+    "Object Up":"Поднять объект",
+    "Object Down":"Опустить объект",
+    "Create New Text Field":"Создать новое текстовое поле",
+    "Create New PostCard":"Создать новую открытку",
+    "If you want create your own postcard, please create your own account, or use Facebook or VK":"Если вы желаете создать свою собственную открытку, создайте свой аккаунт или войдите с помощью Фейсбука или Контакта",
+    "Total rating":"Общий рейтинг",
+    "users leave they vote already":"пользователя оставили уже свой голос",
+    "Welcome!":"Добро Пожаловать!",
+    "PostCard":"Открытка",
+    "Badges":"Награды",
+    "Rating":"Рейтинг",
+    "User:":"Пользователь:",
+    "Created PostCard:":"Созданные открытки",
+    "Average Raiting:":"Средний рейтинг",
+    "Edit":"Редактировать",
+    "Hello":"Привет",
+    "Switch to Russia":"Переключить на английский",
+    "":"",
+    "":""
+
+
+
+
+  }
+}

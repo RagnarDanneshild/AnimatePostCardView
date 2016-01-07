@@ -32,7 +32,7 @@ $('#savesmt').click(function()
 //var elemetn=$('<img/>').attr('src','https://cs7053.vk.me/c540105/v540105861/60d75/1X8ahzEpcww.jpg');
 //$('#imgContainer').append(elemetn);
 
-function init()
+function initGallery()
 {
     $.get('/getListOfPicture/0',function(data){
         $.each( data, function( i, item ) {

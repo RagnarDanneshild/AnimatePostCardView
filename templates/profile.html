@@ -19,17 +19,17 @@
     <div class="btn-pref btn-group  btn-group-lg" role="group" aria-label="...">
         <div class="btn-group" role="group">
             <button type="button" id="stars" class="btn btn-primary" href="#tab1" data-toggle="tab"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                <div class="hidden-xs">PostCard</div>
+                <div class="hidden-xs" lang="en">PostCard</div>
             </button>
         </div>
         <div class="btn-group" role="group">
             <button type="button" id="badges" class="btn btn-default" href="#tab2" data-toggle="tab"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
-                <div class="hidden-xs">Badges</div>
+                <div class="hidden-xs" lang="en">Badges</div>
             </button>
         </div>
         <div class="btn-group" role="group">
             <button type="button" id="rating" class="btn btn-default" href="#tab3" data-toggle="tab"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                <div class="hidden-xs">Rating</div>
+                <div class="hidden-xs" lang="en">Rating</div>
             </button>
         </div>
     </div>
@@ -48,9 +48,9 @@
              <img src="{% static 'image/top6.png' %}"style="display: none;" id="4" title="Create at least 10 PostCard and have average rating more the 4.5"/>
         </div>
         <div class="tab-pane fade in" id="tab3">
-                     <p>User:{{ user.username }}</p>
-                     <p> Created PostCard: <span id="PostCardNumber"></span></p>
-                     <p> Average Raiting:  <span id="PostCardRating"></span></p>
+                     <p lang="en">User:{{ user.username }}</p>
+                     <p lang="en"> Created PostCard: <span id="PostCardNumber"></span></p>
+                     <p lang="en"> Average Raiting:  <span id="PostCardRating"></span></p>
 
 
         </div>

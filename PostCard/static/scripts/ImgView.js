@@ -10,17 +10,17 @@ function getView(url,id,name,user,rating,onlytemplates) {
     }
     else if (usr == user){
         return "<div class='imgView' id='"+id+"'>"+
-        "<a href='/postcard/"+id+"'><h3 class='full_view'>"+name+"</h3></a>"+
-                "<kbd class='full_view'> Rating "+ rating+" </kbd>"+
-        "<a href='/edit/"+id+"'><h3 class='full_view'>Edit</h3></a>"+
-        "<img src='"+url+"'/>"+
+        "<a href='/postcard/"+id+"'>"+name+"</a>"+
+                "<div class='infoLine'><span class='toggle fa fa-camera'></span> <span  class='badge' lang='en'> Rating "+ rating+" </span></div>"+
+        "<a href='/edit/"+id+"' lang='en'>Edit</a>"+
+        "<img class='previewImg' src='"+url+"'/>"+
         "</div>"
     }
     else if(usr != user){
         return "<div class='imgView' id='"+id+"'>" +
-        "<a href='/postcard/"+id+"'><h3 class='full_view'>"+name+"</h3></a>"+
-            "<kbd class='full_view'> Rating "+ rating+" </kbd>"+
-        "<img src='"+url+"'/>"+
+        "<a href='/postcard/"+id+"'>"+name+"</a>"+
+            "<div class='infoLine'><span id='toggle' class='fa fa-camera'></span> <span  class='badge' lang='en'> Rating "+ rating+" </span></div>"+
+        "<img class='previewImg'src='"+url+"'/>"+
         "</div>"
     }
 
@@ -28,6 +28,7 @@ function getView(url,id,name,user,rating,onlytemplates) {
 $("#templateContainer").on("click",".templateView",function(){
     window.location = "/createnew/"+$(this).attr('id');
 });
+
 
 function initCanvas()
 {
@@ -42,4 +43,6 @@ function initCanvas()
         });
     })
 
-}
+};
+
+
