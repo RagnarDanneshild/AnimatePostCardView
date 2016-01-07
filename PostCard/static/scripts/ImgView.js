@@ -31,12 +31,14 @@ $("#templateContainer").on("click",".templateView",function(){
 
 function initCanvas()
 {
-
     $.get(window.location.pathname, function(data) {
-
        var can = new fabric.Canvas('viewCanvas');
-       can.loadFromJSON(JSON.parse(data[0].fields.canvas),can.renderAll.bind(can),function(o, object) {
-           object.selectable = false;
+        getImage1(data[0].fields.canvas_url,function(jsoncanvas){
+            can.loadFromJSON(JSON.parse(jsoncanvas),load,function(o, object) {
+                object.selectable = false;
+                can.add(object);
+                can.renderAll();
+            });
         });
     })
 

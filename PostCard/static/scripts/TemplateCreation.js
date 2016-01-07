@@ -11,8 +11,10 @@ $.get(window.location.pathname, function(data) {
              var postCardName = document.getElementById('postCardName');
             postCardName.setAttribute('value',data[0].fields.name);
         }
-        canvas.loadFromJSON(JSON.parse(data[0].fields.canvas),load,function(o, object) {
+        getImage1(data[0].fields.canvas_url,function(jsoncanvas){
+          canvas.loadFromJSON(JSON.parse(jsoncanvas),load,function(o, object) {
             canvas.add(object);
+          });
         });
    });
 
@@ -53,12 +55,14 @@ createTextField = function(){
     fontSize:30,
     left: canvas.width/2,
     top: canvas.height/2 ,
+    animationtype: 'none'
     });
     textfield.on('mouseup', function(options) {
     if(options.e.pageY<=canvas.wrapperEl.offsetTop||options.e.pageY>=(canvas.height+canvas.wrapperEl.offsetTop)||options.e.pageX<=canvas.wrapperEl.offsetLeft||options.e.pageX>=(canvas.width+canvas.wrapperEl.offsetLeft)) {
         canvas.remove(this);
     }
     });
+    textfield.animationtype = 'jump';
     canvas.add(textfield);
 };
 
@@ -214,20 +218,32 @@ $('#savetest').click(function(){
     var button = document.getElementById("savetest");
     button.disabled = true;
     canvas.deactivateAll().renderAll();
-    savePicture(canvas,function(data) {
-        var postCardName = document.getElementById('postCardName').value;
-        if (postCardName != '') {
-            var jsn = canvas.toJSON(['selectable', 'evented']);
-            $.post('/save', {json: JSON.stringify(jsn), url: data, name: postCardName, tags:JSON.stringify($('#myTags').tagit('assignedTags'))})
-                .done(function (data) {
-                    button.disabled = false;
-                    alert('its ok');
-                });
-        }
-        else{
-            button.disabled = false;
-            alert('Enter Postcard Name!')
-        }
+    savePicture(canvas,function(pictureurl) {
+        saveCanvas(canvas,function(canvasurl) {
+            var postCardName = document.getElementById('postCardName').value;
+            if (postCardName != '') {
+                var jsn = canvas.toJSON(['selectable', 'evented']);
+                $.post('/save', {
+                        purl: pictureurl,
+                        curl: canvasurl,
+                        name: postCardName,
+                        tags: JSON.stringify($('#myTags').tagit('assignedTags'))
+                    })
+                    .done(function (data) {
+                        button.disabled = false;
+                        alert('its ok');
+                    });
+            }
+            else {
+                button.disabled = false;
+                alert('Enter Postcard Name!')
+            }
+        });
     });
     button.disabled = false;
+});
+
+$('#savetest1').click(function(){
+    var jsn = canvas.toJSON(['selectable', 'evented','animationtype']);
+
 });

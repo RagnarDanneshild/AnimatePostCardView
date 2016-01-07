@@ -22,7 +22,7 @@ class UserInfo(models.Model):
 
 class Template(models.Model):
     name = models.CharField(max_length=20)
-    canvas = JSONField()
+    canvas_url = models.CharField(max_length=40)
     template_url = models.CharField(max_length=40)
 
 
@@ -30,7 +30,7 @@ class PostCard(models.Model):
 
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     picture_url = models.CharField(max_length=40)
-    canvas = JSONField()
+    canvas_url = models.CharField(max_length=40)
     name = models.CharField(max_length=20)
     rating = models.FloatField(default=0)
     like_num = models.IntegerField(default=0)
