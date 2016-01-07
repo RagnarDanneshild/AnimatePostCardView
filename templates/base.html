@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>{{ title }}</title>
-    {% load staticfiles %}
+    {% load  staticfiles %}
     <link rel="stylesheet" type="text/css" href="{% static 'content/bootstrap.min.css'%}">
     <link rel="stylesheet" type="text/css" href="{% static 'content/style.css' %}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -99,6 +99,7 @@
     <script src="{% static 'scripts/badges.js' %}"></script>
     <script src="{% static 'scripts/tag-it.min.js' %}"></script>
     <script src="{% static 'scripts/tagview.js' %}"></script>
+   <script src="{% static 'scripts/InitTemplates.js' %}"></script>
 </div>
 {% block scripts %}{% endblock %}
 </body>
