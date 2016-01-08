@@ -6,11 +6,16 @@
     <p lang="en">Register to save postcard</p>
     {% endif %}
 
-    <div>
-		<span lang="en">Post Card Name </span>
-		<input type="text" name='Model Save' id = 'postCardName' text = ''>
-        <ul id="myTags"></ul>
+    <div class="input-group">
+		<span lang="en"class="input-group-addon" >Post Card Name </span>
+		<input type="text" name='Model Save' id = 'postCardName' class="form-control" text = '' style='width:200px'>
+
     </div>
+    <div class="input-group">
+    <span class="input-group-addon" lang="en"> Enter Tags</span> <ul id="myTags"  class="form-control"></ul>
+    </div>
+
+
     <div class='container' id = 'mainblock'>
     <canvas width="500" height="500" id = "first" style="border: 1px solid; position:absolute;"></canvas>
     <button type="button" class="btn btn-default" onclick="upObject()" lang="en">Object Up</button>

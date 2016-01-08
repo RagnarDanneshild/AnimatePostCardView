@@ -5,11 +5,11 @@
     <title>{{ title }}</title>
     {% load  staticfiles %}
     <link rel="stylesheet" type="text/css" href="{% static 'content/bootstrap.min.css'%}">
-    <link rel="stylesheet" type="text/css" href="{% static 'content/style.css' %}">
+    <link rel="stylesheet" id='theme' type="text/css" href="{% static 'content/style.css' %}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/flick/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="{% static 'content/jquery.tagit.css' %}">
-   <link rel="stylesheet"  href="{% static 'content/rateit.css' %}">
+    <link rel="stylesheet"  href="{% static 'content/rateit.css' %}">
 
 </head>
 
@@ -28,8 +28,10 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="#lang-en"class="navbar-brand" onclick="changeLanguage()" lang="en">Switch to Russia</a>
+
                 <a href="/" class="navbar-brand" lang="en">PostCard Editor</a>
+                <a href="#lang-en"class="navbar-brand" onclick="changeLanguage()" lang="en">Switch to Russia</a>
+                <a href="#" class="navbar-brand" onclick="changeTheme($('#theme').attr('href'))" lang="en">Change Theme</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -126,6 +128,20 @@
         window.lang.change('ru');
         return false;
     }
+
+    function changeTheme(current){
+        if(current.split('/')[3]=='style.css'){
+            Cookies.set('theme','day');
+
+        $('#theme').attr('href', '{% static 'content/daytheme.css' %}');
+        }
+        else{
+        $('#theme').attr('href', '{% static 'content/style.css' %}');
+          Cookies.set('theme','night');}
+
+    }
+    if(Cookies.get('theme')=='day')
+      $('#theme').attr('href', '{% static 'content/daytheme.css' %}');
 </script>
 
 
