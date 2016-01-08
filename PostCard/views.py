@@ -2,18 +2,26 @@ from django.shortcuts import render
 from django.http import HttpRequest,HttpResponse
 from django.template import RequestContext
 from tagging.models import TaggedItem
-
-from PostCard.models import *
-from PostCard.forms import UserProfileForm
-from django.forms import modelformset_factory
-from django.shortcuts import render_to_response
-from PostCard.models import *
+from postcard.forms import UserProfileForm
 from django.views.generic import TemplateView
 from django.core import serializers
-from PostCard.check_badges import *
+from postcard.check_badges import *
 import json
 from django.db.models import Avg
+from django.shortcuts import render_to_response
+from .forms import TemplatesSearchForm
 # Create your views here. f
+from haystack.query import SearchQuerySet
+
+
+def postcards(request):
+    form = TemplatesSearchForm(request.GET)
+    postcards = form.search()
+    print(form)
+    print(postcards)
+    sqs = SearchQuerySet()
+    print(sqs.count())
+    return render_to_response('search/search.html', {'postcards': postcards})
 
 
 class Home(TemplateView):
