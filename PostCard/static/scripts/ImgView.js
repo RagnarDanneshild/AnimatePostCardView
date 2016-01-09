@@ -43,7 +43,7 @@ function initCanvas()
     $.get(window.location.pathname, function(data) {
        var can = new fabric.Canvas('viewCanvas');
         getImage1(data[0].fields.canvas_url,function(jsoncanvas){
-            can.loadFromJSON(JSON.parse(jsoncanvas),load,function(o, object) {
+            can.loadFromJSON(JSON.parse(jsoncanvas),function(){ load(can);},function(o, object) {
                 object.selectable = false;
                 can.add(object);
                 can.renderAll();
