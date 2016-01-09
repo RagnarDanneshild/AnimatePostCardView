@@ -8,20 +8,14 @@ from django.core import serializers
 from postcard.check_badges import *
 import json
 from django.db.models import Avg
-from django.shortcuts import render_to_response
-from .forms import TemplatesSearchForm
-# Create your views here. f
 from haystack.query import SearchQuerySet
 
 
-def postcards(request):
-    form = TemplatesSearchForm(request.GET)
-    postcards = form.search()
-    print(form)
-    print(postcards)
-    sqs = SearchQuerySet()
-    print(sqs.count())
-    return render_to_response('search/search.html', {'postcards': postcards})
+def search(request):
+    if request.is_ajax():
+        searchobjects = [item.object for item in SearchQuerySet().filter(content=request.POST.get('searching_data'))]
+        jsonsearchresult = serializers.serialize('json', searchobjects)
+        return HttpResponse(jsonsearchresult, content_type='application/json')
 
 
 class Home(TemplateView):
