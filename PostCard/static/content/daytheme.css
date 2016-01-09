@@ -1,8 +1,11 @@
-/* USER PROFILE PAGE */
+body
+{
+     background-color:#cc66ff;
+}
 .contentBlock
 {
     margin-top:60px;
-    background-image: url('http://www.planwallpaper.com/static/images/cool-background.jpg');
+
 }
 .navbar-inverse {
     background-color: #0b670a;
@@ -20,7 +23,10 @@
 {
     margin-top:60px;
 }
-
+#TagCanvas
+{
+  float:right;
+}
 #mainblock
 {
     background-color: whitesmoke;

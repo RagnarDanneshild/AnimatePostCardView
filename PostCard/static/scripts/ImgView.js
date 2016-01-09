@@ -10,9 +10,9 @@ function getView(url,id,name,user,rating,onlytemplates) {
     }
     else if (usr == user){
         return "<div class='imgView' id='"+id+"'>"+
-        "<a href='/postcard/"+id+"'>"+name+"</a>"+
+        "<a href='/postcard/"+id+"'>"+name+"   </a>"+"<span ><a  href='/edit/"+id+"' lang='en'><i class='fa fa-pencil-square-o'></i></a></span>"+
                 "<div class='infoLine'><span class='toggle fa fa-camera'></span> <span  class='badge' lang='en'> Rating "+ rating+" </span></div>"+
-        "<a href='/edit/"+id+"' lang='en'>Edit</a>"+
+
         "<img class='previewImg' src='"+url+"'/>"+
         "</div>"
     }
