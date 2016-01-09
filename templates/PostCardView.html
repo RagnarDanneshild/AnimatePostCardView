@@ -1,17 +1,6 @@
 {% extends 'base.html' %}
 
 {%  block content %}
-    <form type="get" action=".">
-    <input type="text" name="q">
-    <button type="submit">Search</button>
-</form>
-
-{% for note in notes %}
-<h1>{{ note.title }}</h1>
-<p>
-    {{ note.body }}
-</p>
-{% endfor %}
 <canvas width="800" height="600" id="viewCanvas"></canvas>
     {% if user.is_authenticated %}
         <div class="rateit bigstars" data-rateit-starwidth="32" data-rateit-starheight="32" data-rateit-step="1" data-rateit-resetable="false"  ></div>

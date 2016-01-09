@@ -1,0 +1,5 @@
+{{object.name}}
+{{object.tags}}
+{{object.author}}
+{{object.postcardid}}
+{{object.postcardpicurl}}

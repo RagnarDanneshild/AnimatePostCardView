@@ -19,7 +19,7 @@ urlpatterns = [
         name='logout'),
     url(r'^accounts/register$', RegistrationViewUniqueEmail.as_view(),name='registration_register'),
     url(r'^accounts/', include('registration.backends.default.urls')),
-    url(r'^search/', 'postcard.views.postcards'),
+    url(r'^search/$', 'postcard.views.search'),
     url(r'^profile$', 'postcard.views.profile', name='profile'),
     #url(r'^firstTemplate$',edit.as_view(),name='edit'),
     url(r'^savePostCard$', 'postcard.views.save_post_card'),
