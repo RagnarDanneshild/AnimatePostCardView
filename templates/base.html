@@ -10,6 +10,7 @@
     <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/flick/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="{% static 'content/jquery.tagit.css' %}">
     <link rel="stylesheet"  href="{% static 'content/rateit.css' %}">
+    <link rel="stylesheet"  href="{% static 'content/dropdownmenu.css' %}">
 
 </head>
 
@@ -42,25 +43,33 @@
                     {%  if user.is_authenticated %}
                         <li lang="en"><a href="{% url 'profile' %}" class="navbar-brand" >Hello {{ user.username }}!</a></li>
                         <li><a href="{% url 'logout' %}" lang="en">Logout</a></li>
-                        <input id="username" type="hidden" value="{{ user.id }}" />
+                        <input id="username" type="hidden" value="{{user.id}}" />
                     {% else %}
-    <li>
-      <a href="accounts/register">
-        <i class="fa fa-user fa-2x"></i>
-      </a>
-    </li>
-    <li>
-      <a href="{% url 'social:begin' 'vk-oauth2' %}">
-        <i class="fa fa-vk fa-2x"></i>
-      </a>
-    </li>
+                        <li>
+                          <a href="accounts/register">
+                            <i class="fa fa-user fa-2x"></i>
+                          </a>
+                        </li>
+                        <li>
+                          <a href="{% url 'social:begin' 'vk-oauth2' %}">
+                            <i class="fa fa-vk fa-2x"></i>
+                          </a>
+                        </li>
 
-    <li>
-      <a href="{% url 'social:begin' 'facebook' %}">
-        <i class="fa fa-facebook fa-2x"></i>
-      </a>
-    </li>
-                {% endif %}
+                        <li>
+                          <a href="{% url 'social:begin' 'facebook' %}">
+                            <i class="fa fa-facebook fa-2x"></i>
+                          </a>
+                        </li>
+                    {% endif %}
+                    <section class="main">
+                         <form id="search-form" class="search" method="POST" >
+                             {% csrf_token %}
+                             <input id="search-text" type="text" name="q" placeholder="Search..." />
+                             <ul class="results" id="searchlist" >
+                             </ul>
+                         </form>
+                    </section>
                 </ul>
             </div>
         </div>

@@ -59,3 +59,31 @@ function initUserCard()
         });
     });
 };
+
+$('#search-form').on('submit', function(event){
+    event.preventDefault();  // sanity check
+    searching();
+});
+
+function searching() {
+   $.ajax({
+        url : "/search/", // the endpoint
+        type : "POST", // http method
+        data : { searching_data : $('#search-text').val() }, // data sent with the post request
+        success : function(sresult) {
+            $("#searchlist").empty();
+            $.each( sresult, function( i, item ) {
+            getImage(item.fields.picture_url,
+            function(url){
+               $( "#searchlist").append(getView(url,item.pk,item.fields.name,'search'));
+            }
+            );
+        });
+        },
+        error : function(xhr,errmsg,err) {
+            $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+    });
+};

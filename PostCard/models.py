@@ -27,7 +27,6 @@ class Template(models.Model):
 
 
 class PostCard(models.Model):
-
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     picture_url = models.CharField(max_length=40)
     canvas_url = models.CharField(max_length=40)

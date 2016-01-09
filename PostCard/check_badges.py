@@ -1,5 +1,5 @@
 from django.utils import timezone
-from PostCard.models import *
+from postcard.models import *
 from django.db.models import Avg
 
 

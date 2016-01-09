@@ -9,7 +9,7 @@ from django.utils.timezone import utc
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('PostCard', '0003_auto_20151218_1446'),
+        ('postcard', '0003_auto_20151218_1446'),
     ]
 
     operations = [

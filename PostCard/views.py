@@ -2,18 +2,20 @@ from django.shortcuts import render
 from django.http import HttpRequest,HttpResponse
 from django.template import RequestContext
 from tagging.models import TaggedItem
-
-from PostCard.models import *
-from PostCard.forms import UserProfileForm
-from django.forms import modelformset_factory
-from django.shortcuts import render_to_response
-from PostCard.models import *
+from postcard.forms import UserProfileForm
 from django.views.generic import TemplateView
 from django.core import serializers
-from PostCard.check_badges import *
+from postcard.check_badges import *
 import json
 from django.db.models import Avg
-# Create your views here. f
+from haystack.query import SearchQuerySet
+
+
+def search(request):
+    if request.is_ajax():
+        searchobjects = [item.object for item in SearchQuerySet().filter(content=request.POST.get('searching_data'))]
+        jsonsearchresult = serializers.serialize('json', searchobjects)
+        return HttpResponse(jsonsearchresult, content_type='application/json')
 
 
 class Home(TemplateView):

@@ -8,7 +8,7 @@ from django.conf import settings
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('PostCard', '0004_auto_20151218_1451'),
+        ('postcard', '0004_auto_20151218_1451'),
     ]
 
     operations = [

@@ -29,7 +29,7 @@
  <ul>
                 {% load tagging_tags %}
 
-    {% tag_cloud_for_model PostCard.PostCard as tags with steps=20 min_count=1 distribution=log %}
+    {% tag_cloud_for_model postcard.PostCard as tags with steps=20 min_count=1 distribution=log %}
     {% for tag in tags %}
         {% if tag.name != '[' and tag.name != ']' and tag.name != '[]' %}
         <li><a href="/tags/{{ tag.name }}" title="{{ tag.count }}">{{ tag.name }}</a></li>

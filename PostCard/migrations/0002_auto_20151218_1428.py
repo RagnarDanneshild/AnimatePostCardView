@@ -7,7 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('PostCard', '0001_initial'),
+        ('postcard', '0001_initial'),
     ]
 
     operations = [

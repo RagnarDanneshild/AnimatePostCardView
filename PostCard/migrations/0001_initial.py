@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='PostCard',
+            name='postcard',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('picture_url', models.URLField()),
@@ -29,7 +29,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('body', models.TextField()),
                 ('like_name', models.IntegerField()),
-                ('post_card', models.ForeignKey(to='PostCard.PostCard')),
+                ('post_card', models.ForeignKey(to='postcard.PostCard')),
             ],
         ),
         migrations.CreateModel(
@@ -67,7 +67,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='userachievement',
             name='user',
-            field=models.ForeignKey(to='PostCard.UserInfo'),
+            field=models.ForeignKey(to='postcard.UserInfo'),
         ),
         migrations.AddField(
             model_name='postcardcomments',
@@ -77,11 +77,11 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='postcard',
             name='template',
-            field=models.OneToOneField(to='PostCard.Template'),
+            field=models.OneToOneField(to='postcard.Template'),
         ),
         migrations.AddField(
             model_name='postcard',
             name='user',
-            field=models.ForeignKey(to='PostCard.UserInfo'),
+            field=models.ForeignKey(to='postcard.UserInfo'),
         ),
     ]
