@@ -2,8 +2,8 @@
  * Created by HellAlien on 24.12.2015.
  */
 var canvasWrapper, handleDragEnd, handleDragEnter, handleDragLeave, handleDragOver, handleDragStart, handleDrop, images, loadOneImage, noStandartDrop, upObject;
-var selectedObject,canlen;
-
+var selectedObject;
+var animationtype,isAnimation = false;
 var canvas = new fabric.Canvas('first');
 
 $.get(window.location.pathname, function(data) {
@@ -12,28 +12,33 @@ $.get(window.location.pathname, function(data) {
             postCardName.setAttribute('value',data[0].fields.name);
         }
         getImage1(data[0].fields.canvas_url,function(jsoncanvas){
-          canvas.loadFromJSON(JSON.parse(jsoncanvas),load,function(o, object) {
-            canvas.add(object);
+            var tempForAnimationObject = [];
+          canvas.loadFromJSON(JSON.parse(jsoncanvas),function(){ afterCanvasLoad(canvas,tempForAnimationObject);},function(o, object) {
+              if (object.animationtype)
+                tempForAnimationObject.push(object);
+              if (object.evented == false) {
+                  setCanvasParams(canvas, object);
+              }
+              canvas.add(object);
           });
         });
    });
 
-function load(){
-    canlen = canvas.getObjects().length;
-    var elnum;
-    for (var i = 0;i<canlen;i++){
-        if (canvas.item(i).evented == false){
-            elnum = i;
-            break;
-        }
+function afterCanvasLoad(canvas,lisfofobjects){
+    for(var i = 0;i<lisfofobjects.length;i++){
+        startAnimation(canvas, lisfofobjects[i],lisfofobjects[i].animationtype);
     }
-    imgheight=canvas.item(elnum).height;
-    imgwidth=canvas.item(elnum).width;
-    var y = canvas.item(elnum).scaleY;
-    var x = canvas.item(elnum).scaleX;
-    canvas.setHeight(imgheight*y);
-    canvas.setWidth(imgwidth*x);
-    canvas.renderAll.bind(canvas);
+    canvas.renderAll();
+}
+
+function setCanvasParams(c,object){
+    imgheight=object.height;
+    imgwidth=object.width;
+    var y = object.scaleY;
+    var x = object.scaleX;
+    c.setHeight(imgheight*y);
+    c.setWidth(imgwidth*x);
+    c.renderAll.bind(c);
 }
 canvas.controlsAboveOverlay = true;
 canvas.selection = false;
@@ -62,7 +67,6 @@ createTextField = function(){
         canvas.remove(this);
     }
     });
-    textfield.animationtype = 'jump';
     canvas.add(textfield);
 };
 
@@ -83,6 +87,60 @@ changeColor = function(val){
     canvas.renderAll();
 };
 
+function  setsimpleoptions(c){
+    var simpleoptions = {
+        duration: 2000,
+        easing: fabric.util.ease.easeOutCubic,
+        onChange: c.renderAll.bind(c)
+    }
+    return simpleoptions;
+}
+
+function animateSliding(c,obj,animationtype,stopcoords){
+     obj.animate('left', obj.left === 50 ? stopcoords : 50,{
+        duration: 2000,
+        easing: fabric.util.ease.easeOutCubic,
+        onChange: c.renderAll.bind(c),
+        onComplete: function onComplete() {
+            if (isAnimation && animationtype =='scale_sliding' ){
+                animateScale(c,obj);
+                animateSliding(c,obj,animationtype,stopcoords);
+            }
+            else if(isAnimation && animationtype == 'sliding'){
+                animateSliding(c,obj,animationtype,stopcoords);
+            }
+        }
+    })
+}
+
+function animateScale(canvas,obj){
+    obj.animate('scaleX',obj.scaleX === 1 ? 2 : 1,setsimpleoptions(canvas));
+    obj.animate('scaleY',obj.scaleY === 1 ? 2 : 1,setsimpleoptions(canvas))
+};
+
+stopAnimation = function(){
+    isAnimation = false;
+}
+
+function startAnimation(canvas,obj,animationtype){
+    isAnimation = true;
+    obj.animationtype = animationtype;
+    obj.scale(Math.round(obj.scaleX),Math.round(obj.scaleX));
+    var stopcoords;
+    if (animationtype =='sliding')
+        stopcoords = canvas.width-obj.width*obj.scaleX-50;
+    else if(animationtype=='scale_sliding')
+        stopcoords = canvas.width-obj.width*2-50;
+    if (isAnimation && animationtype !='none')
+        animateSliding(canvas,obj,animationtype,stopcoords);
+}
+
+$('#setanimationtype').change(function() {
+    animationtype = $("#setanimationtype option:selected").val();
+    var obj = canvas.getActiveObject();
+    startAnimation(canvas,obj,animationtype);
+});
+
 $('#setfontfamily').change(function() {
     var val = $("#setfontfamily option:selected").text();
     var obj = canvas.getActiveObject();
@@ -96,7 +154,8 @@ loadOneImage = function(img, newImage) {
     width: img.width,
     height: img.height,
     left: e.layerX,
-    top: e.layerY
+    top: e.layerY,
+      animationtype: 'none'
   });
     newImage.on('mouseup', function() {
     this.off('mousedown');
@@ -161,7 +220,8 @@ handleDrop = function(e) {
             width: img.width,
             height: img.height,
             left: e.layerX,
-            top: e.layerY
+            top: e.layerY,
+                animationtype: 'none'
               });
               newImage.on('mouseup', function(options) {
             this.off('mousedown');
@@ -218,12 +278,12 @@ $('#savetest').click(function(){
     var button = document.getElementById("savetest");
     button.disabled = true;
     canvas.deactivateAll().renderAll();
+    canvas.setBackgroundColor('white', canvas.renderAll.bind(canvas))
     savePicture(canvas,function(pictureurl) {
         saveCanvas(canvas,function(canvasurl) {
             var postCardName = document.getElementById('postCardName').value;
             if (postCardName != '') {
-                var jsn = canvas.toJSON(['selectable', 'evented']);
-                $.post('/save', {
+                 $.post('/save', {
                         purl: pictureurl,
                         curl: canvasurl,
                         name: postCardName,
