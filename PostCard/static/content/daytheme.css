@@ -7,6 +7,11 @@ body
     margin-top:60px;
 
 }
+.View
+{
+    background-color: gainsboro;
+}
+
 .navbar-inverse {
     background-color: #0b670a;
     border-color: #dd2733;
@@ -21,7 +26,8 @@ body
 }
 .imgView
 {
-    margin-top:60px;
+    margin-top: 40px;
+    margin-left: 100px;
 }
 #TagCanvas
 {
@@ -124,3 +130,7 @@ body
     text-align: center;
 }
 
+.dropdown
+{
+    display: inline;
+}
