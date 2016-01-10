@@ -4,11 +4,11 @@ body
 }
 .contentBlock
 {
-    margin-top:60px;
+    margin-top:80px;
 
 }
 .View
-{
+{ box-shadow:10px 10px 5px #888888;
     background-color: gainsboro;
 }
 
@@ -27,7 +27,7 @@ body
 .imgView
 {
     margin-top: 40px;
-    margin-left: 100px;
+    margin-left: 60px;
 }
 #TagCanvas
 {

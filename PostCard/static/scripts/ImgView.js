@@ -39,17 +39,24 @@ $("#templateContainer").on("click",".templateView",function(){
 
 
 function initCanvas()
-{
+{var can = new fabric.Canvas('viewCanvas');
     $.get(window.location.pathname, function(data) {
-       var can = new fabric.Canvas('viewCanvas');
+        if(data[0].fields.user){
+             var postCardName = document.getElementById('postCardName');
+            postCardName.setAttribute('value',data[0].fields.name);
+        }
         getImage1(data[0].fields.canvas_url,function(jsoncanvas){
-            can.loadFromJSON(JSON.parse(jsoncanvas),function(){ load(can);},function(o, object) {
-                object.selectable = false;
-                can.add(object);
-                can.renderAll();
-            });
+            var tempForAnimationObject = [];
+          can.loadFromJSON(JSON.parse(jsoncanvas),function(){ afterCanvasLoad(can,tempForAnimationObject);},function(o, object) {
+              if (object.animationtype)
+                tempForAnimationObject.push(object);
+              if (object.evented == false) {
+                  setCanvasParams(can, object);
+              }
+              can.add(object);
+          });
         });
-    })
+   });
 
 };
 
