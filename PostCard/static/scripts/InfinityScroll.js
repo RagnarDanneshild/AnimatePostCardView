@@ -18,10 +18,3 @@ $(document).ready(function(){
     });
 });
 
- function moreData()
- {
- $.get('/getListOfPicture/'+coff.toString(),function(data){
-     populateContainer(data,"#imgContainer",'#previewImg','preview');
- });
-     coff=coff+4;
- }

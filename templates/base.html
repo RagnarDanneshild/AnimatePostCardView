@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>{{ title }}</title>
     {% load  staticfiles %}
+    {% load bootstrap3 %}
     <link rel="stylesheet" type="text/css" href="{% static 'content/bootstrap.min.css'%}">
     <link rel="stylesheet" id='theme' type="text/css" href="{% static 'content/style.css' %}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -15,54 +16,48 @@
 </head>
 
 <body>
-
-
-
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-
-
                 <a href="/" class="navbar-brand" lang="en">PostCard Editor</a>
-
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <div class="dropdown">
-  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-    Choose Language
-    <span class="caret"></span>
-  </button>
-  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-    <li><a href="#lang-en" lang="en" onclick="changeLanguage('en')">English</a></li>
-    <li><a href="#lang-ru" lang="en" onclick="changeLanguage('ru')">Russian</a></li>
-
-  </ul>
-</div>
-
-                      <div class="dropdown">
-  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-    Change Theme
-    <span class="caret"></span>
-  </button>
-  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-    <li><a href="#lang-en" lang="en" onclick="changeTheme('style')">Theme1</a></li>
-    <li><a href="#lang-ru" lang="en" onclick="changeTheme('daytheme')">Theme2</a></li>
-
-  </ul>
-</div>
-
+                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            Choose Language
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li><a href="#lang-en" lang="en" onclick="changeLanguage('en')">English</a></li>
+                            <li><a href="#lang-ru" lang="en" onclick="changeLanguage('ru')">Russian</a></li>
+                        </ul>
+                    </div>
+                    <div class="dropdown">
+                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            Change Theme
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li><a href="#lang-en" lang="en" onclick="changeTheme('style')">Theme1</a></li>
+                            <li><a href="#lang-ru" lang="en" onclick="changeTheme('daytheme')">Theme2</a></li>
+                        </ul>
+                    </div>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     {%  if user.is_authenticated %}
-                        <li lang="en"><a href="{% url 'profile' %}" class="navbar-brand" >Logged as {{ user.username }}!</a></li>
+                        <li><a href="{% url 'profile' %}" lang="en" class="navbar-brand" >{{ user.username }}</a></li>
                         <li><a href="{% url 'logout' %}" lang="en">Logout</a></li>
                         <input id="username" type="hidden" value="{{user.id}}" />
                     {% else %}
-                        <li>
-                          <a href="accounts/register">
-                            <i class="fa fa-user fa-2x"></i>
-                          </a>
+                        <li><p>
+                            <a class="btn btn-lg btn-primary" href="{% url 'registration_register' %}">Register</a>
+                        </p>
+                        </li>
+                        <li><p>
+                            <a class="btn btn-lg btn-success"
+                                href="{% url 'django.contrib.auth.views.login' %}">Sign in</a>
+                        </p>
                         </li>
                         <li>
                           <a href="{% url 'social:begin' 'vk-oauth2' %}">
@@ -79,7 +74,7 @@
                     <section class="main">
                          <form id="search-form" class="search" method="POST" >
                              {% csrf_token %}
-                             <input id="search-text" type="text" name="q" placeholder="Search..." />
+                             <input lang="en" id="search-text" type="text" name="q" placeholder="Search..." />
                              <ul class="results" id="searchlist" >
                              </ul>
                          </form>
@@ -88,7 +83,6 @@
             </div>
         </div>
     </div>
-
 <div class='contentBlock'>
  {% block content %}{% endblock %}
 </div>
@@ -123,19 +117,20 @@
     <script src="{% static 'lib/jquery.rateit.min.js' %}"></script>
     <script src="{% static 'lib/tag-it.min.js' %}"></script>
     <script src="{% static 'lib/tagcanvas.js' %}"></script>
-
     <script src="{% static 'scripts/dropbox.js' %}"></script>
     <script src="{% static 'scripts/ImgView.js' %}"></script>
     <script src="{% static 'scripts/Crsf_tokenSetup.js' %}"></script>
     <script src="{% static 'scripts/UserProfile.js' %}"></script>
-    <script src="{% static 'scripts/IniView.js' %}"></script>
     <script src="{% static 'scripts/InfinityScroll.js' %}"></script>
-    <script src="{% static 'scripts/TemplateCreation.js' %}"></script>
+    <script src="{% static 'scripts/loadtocanvas.js' %}"></script>
     <script src="{% static 'scripts/rating.js' %}"></script>
     <script src="{% static 'scripts/badges.js' %}"></script>
     <script src="{% static 'scripts/tagview.js' %}"></script>
-    <script src="{% static 'scripts/InitTemplates.js' %}"></script>
+    <script src="{% static 'scripts/InitAll.js' %}"></script>
     <script src="{% static 'scripts/profileEdit.js' %}"></script>
+    <script src="{% static 'scripts/searching.js' %}"></script>
+    <script src="{% static 'scripts/animation.js' %}"></script>
+
 
 <script type="text/javascript">
 

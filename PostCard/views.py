@@ -85,14 +85,11 @@ def save_post_card(request):
 
     return HttpResponse('it s ok')
 
-tlist = Template.objects.all()
-for item in tlist:
-    print (item.picture_url)
-def getlist(request, num=-1):
 
+def getlist(request, num=-1):
     if request.is_ajax():
         if num == -1:
-
+            tlist = Template.objects.all()
             data = serializers.serialize("json", tlist)
         else:
             slist = PostCard.objects.all().order_by('-creation_date')
@@ -165,3 +162,24 @@ def user_rating(request):
         data['number']=PostCard.objects.filter(user=request.user).count()
         data['rating']=PostCard.objects.filter(user=request.user).aggregate(Avg('rating'))['rating__avg']
     return HttpResponse(json.dumps(data), content_type="application/json")
+
+
+def update_user_profile(request, field):
+    user = UserInfo.objects.get(user=request.user)
+    update_data = request.POST['data']
+    if field == 'firstname':
+        user.first_name = update_data
+    elif field == 'lastName':
+        user.last_name = update_data
+    elif field == 'telephone':
+        user.last_name = int(update_data)
+    elif field == 'description':
+        user.description = update_data
+    user.save()
+    return HttpResponse('it s great deal')
+
+
+def get_user_info(request):
+    if request.is_ajax():
+        data=r=serializers.serialize('json',[UserInfo.objects.get(user=request.user)])
+    return HttpResponse(data, content_type="application/json")
