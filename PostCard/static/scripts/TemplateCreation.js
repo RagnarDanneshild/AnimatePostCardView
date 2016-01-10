@@ -6,43 +6,18 @@ var selectedObject;
 var animationtype,isAnimation = false;
 var canvas = new fabric.Canvas('first');
 
-$.get(window.location.pathname, function(data) {
-        if(data[0].fields.user){
-             var postCardName = document.getElementById('postCardName');
-            postCardName.setAttribute('value',data[0].fields.name);
-        }
-        getImage1(data[0].fields.canvas_url,function(jsoncanvas){
-            var tempForAnimationObject = [];
-          canvas.loadFromJSON(JSON.parse(jsoncanvas),function(){ afterCanvasLoad(canvas,tempForAnimationObject);},function(o, object) {
-              if (object.animationtype)
-                tempForAnimationObject.push(object);
-              if (object.evented == false) {
-                  setCanvasParams(canvas, object);
-              }
-              canvas.add(object);
-          });
-        });
-   });
+$(document).ready(function(){
+    appendLoadingImg();
+    loadAllToCanvas(canvas,true);
+    canvas.controlsAboveOverlay = true;
+    canvas.selection = false;
+    canvasWrapper = document.getElementById('mainblock');
+    canvasWrapper.addEventListener('dragenter', handleDragEnter, false);
+    canvasWrapper.addEventListener('dragleave', handleDragLeave, false);
+    canvasWrapper.addEventListener('dragover', handleDragOver, false);
+    canvasWrapper.addEventListener('drop', handleDrop, false);
 
-function afterCanvasLoad(canvas,lisfofobjects){
-    for(var i = 0;i<lisfofobjects.length;i++){
-        startAnimation(canvas, lisfofobjects[i],lisfofobjects[i].animationtype);
-    }
-    canvas.renderAll();
-}
-
-function setCanvasParams(c,object){
-    imgheight=object.height;
-    imgwidth=object.width;
-    var y = object.scaleY;
-    var x = object.scaleX;
-    c.setHeight(imgheight*y);
-    c.setWidth(imgwidth*x);
-    c.renderAll.bind(c);
-}
-canvas.controlsAboveOverlay = true;
-canvas.selection = false;
-
+});
 upObject = function() {
     selectedObject = canvas.getActiveObject();
     selectedObject.bringForward();
@@ -87,53 +62,12 @@ changeColor = function(val){
     canvas.renderAll();
 };
 
-function  setsimpleoptions(c){
-    var simpleoptions = {
-        duration: 2000,
-        easing: fabric.util.ease.easeOutCubic,
-        onChange: c.renderAll.bind(c)
-    }
-    return simpleoptions;
-}
 
-function animateSliding(c,obj,animationtype,stopcoords){
-     obj.animate('left', obj.left === 50 ? stopcoords : 50,{
-        duration: 2000,
-        easing: fabric.util.ease.easeOutCubic,
-        onChange: c.renderAll.bind(c),
-        onComplete: function onComplete() {
-            if (isAnimation && animationtype =='scale_sliding' ){
-                animateScale(c,obj);
-                animateSliding(c,obj,animationtype,stopcoords);
-            }
-            else if(isAnimation && animationtype == 'sliding'){
-                animateSliding(c,obj,animationtype,stopcoords);
-            }
-        }
-    })
-}
-
-function animateScale(canvas,obj){
-    obj.animate('scaleX',obj.scaleX === 1 ? 2 : 1,setsimpleoptions(canvas));
-    obj.animate('scaleY',obj.scaleY === 1 ? 2 : 1,setsimpleoptions(canvas))
-};
 
 stopAnimation = function(){
     isAnimation = false;
 }
 
-function startAnimation(canvas,obj,animationtype){
-    isAnimation = true;
-    obj.animationtype = animationtype;
-    obj.scale(Math.round(obj.scaleX),Math.round(obj.scaleX));
-    var stopcoords;
-    if (animationtype =='sliding')
-        stopcoords = canvas.width-obj.width*obj.scaleX-50;
-    else if(animationtype=='scale_sliding')
-        stopcoords = canvas.width-obj.width*2-50;
-    if (isAnimation && animationtype !='none')
-        animateSliding(canvas,obj,animationtype,stopcoords);
-}
 
 $('#setanimationtype').change(function() {
     animationtype = $("#setanimationtype option:selected").val();
@@ -266,13 +200,7 @@ images = document.querySelectorAll('#images img');
   return img.addEventListener('dragend', handleDragEnd, false);
 });
 
-canvasWrapper.addEventListener('dragenter', handleDragEnter, false);
 
-canvasWrapper.addEventListener('dragleave', handleDragLeave, false);
-
-canvasWrapper.addEventListener('dragover', handleDragOver, false);
-
-canvasWrapper.addEventListener('drop', handleDrop, false);
 
 $('#savetest').click(function(){
     var button = document.getElementById("savetest");
@@ -301,9 +229,4 @@ $('#savetest').click(function(){
         });
     });
     button.disabled = false;
-});
-
-$('#savetest1').click(function(){
-    var jsn = canvas.toJSON(['selectable', 'evented','animationtype']);
-
 });
