@@ -4,10 +4,15 @@
    function inittemplates()
     {
         $.get('/getListOfPicture/templates/',function(data){
-            $.each( data, function( i, item ) {
-                 getImage(item.fields.template_url,function(url){
-                    $( "#templateContainer").append(getView(url,item.pk,item.fields.name,'templates'));
-                });
-            });
+            populateContainer(data,"#templateContainer",'#templateImg','templates');
         });
     };
+function  populateContainer(data,containerId,imgId,viewtype){
+    $.each( data, function( i, item ) {
+        var id = item.pk;
+        getImage(containerId,item,viewtype,function(url){
+            imgid = imgId+id;
+            $(imgid).attr('src',url);
+        });
+    });
+}

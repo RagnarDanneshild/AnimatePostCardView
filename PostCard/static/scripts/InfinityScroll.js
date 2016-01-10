@@ -21,13 +21,7 @@ $(document).ready(function(){
  function moreData()
  {
  $.get('/getListOfPicture/'+coff.toString(),function(data){
-     $.each( data, function( i, item ) {
-         getImage(item.fields.picture_url,
-         function(url){
-            $( "#imgContainer").append(getView(url,item.pk,item.fields.name,item.fields.user,item.fields.rating));
-         }
-         );
-    });
+     populateContainer(data,"#imgContainer",'#previewImg','preview');
  });
      coff=coff+4;
  }

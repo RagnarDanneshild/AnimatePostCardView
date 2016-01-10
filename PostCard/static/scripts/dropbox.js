@@ -50,8 +50,9 @@ function saveCanvas (canvas,callback) {
         }
     });
 };
-function getImage(path,callback) {
-    client.readFile(path, {blob: true}, function (error, data) {
+function getImage(containerid,item,viewtype,callback) {
+    $(containerid).append(getView(item.pk,item.fields.name,item.fields.user,item.fields.rating,viewtype));
+    client.readFile(item.fields.picture_url, {blob: true}, function (error, data) {
         if (error) {
             alert(error);  // Something went wrong.
         }

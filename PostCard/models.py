@@ -23,7 +23,7 @@ class UserInfo(models.Model):
 class Template(models.Model):
     name = models.CharField(max_length=20)
     canvas_url = models.CharField(max_length=40)
-    template_url = models.CharField(max_length=40)
+    picture_url = models.CharField(max_length=40)
 
 
 class PostCard(models.Model):
@@ -43,16 +43,6 @@ class PostCard(models.Model):
         else:
             self.rating =(self.rating*self.like_num+new_one)/self.like_num
         self.save()
-
-
-class PostcardComments(models.Model):
-
-    post_card = models.ForeignKey(PostCard,on_delete=models.CASCADE)
-    body = models.TextField()
-    user = models.ForeignKey(User,on_delete=models.CASCADE)
-    like_count = models.IntegerField(default=0)
-    creation_date = models.DateTimeField(auto_now_add=True)
-
 
 class PostCardRating(models.Model):
     post_card = models.ForeignKey(PostCard,on_delete=models.CASCADE)

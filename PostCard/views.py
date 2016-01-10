@@ -85,11 +85,14 @@ def save_post_card(request):
 
     return HttpResponse('it s ok')
 
-
+tlist = Template.objects.all()
+for item in tlist:
+    print (item.picture_url)
 def getlist(request, num=-1):
+
     if request.is_ajax():
         if num == -1:
-            tlist = Template.objects.all()
+
             data = serializers.serialize("json", tlist)
         else:
             slist = PostCard.objects.all().order_by('-creation_date')

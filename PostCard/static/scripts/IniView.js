@@ -35,13 +35,7 @@ $('#savesmt').click(function()
 function initGallery()
 {
     $.get('/getListOfPicture/0',function(data){
-        $.each( data, function( i, item ) {
-             getImage(item.fields.picture_url,
-             function(url){
-                $( "#imgContainer").append(getView(url,item.pk,item.fields.name,item.fields.user,item.fields.rating,'false'));
-            }
-            );
-        });
+        populateContainer(data,"#imgContainer",'#previewImg','preview');
     });
 };
 
@@ -50,13 +44,7 @@ function initGallery()
 function initUserCard()
 {
     $.get('/getListOfPicture/4',{user:true},function(data){
-        $.each( data, function( i, item ) {
-            getImage(item.fields.picture_url,
-            function(url){
-               $( "#UserimgContainer").append(getView(url,item.pk,item.fields.name,item.fields.user,item.fields.rating,'false'));
-            }
-            );
-        });
+        populateContainer(data,"#UserimgContainer",'#previewImg','preview');
     });
 };
 
@@ -72,13 +60,7 @@ function searching() {
         data : { searching_data : $('#search-text').val() }, // data sent with the post request
         success : function(sresult) {
             $("#searchlist").empty();
-            $.each( sresult, function( i, item ) {
-            getImage(item.fields.picture_url,
-            function(url){
-               $( "#searchlist").append(getView(url,item.pk,item.fields.name,'search'));
-            }
-            );
-        });
+            populateContainer(sresult,"#searchlist",'#searchingImg','searching');
         },
         error : function(xhr,errmsg,err) {
             $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
