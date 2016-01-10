@@ -19,18 +19,24 @@
     <div class='container' id = 'mainblock'>
         <canvas width="500" height="500" id = "first" style="border: 1px solid; position:absolute;"></canvas>
         <button type="button" class="btn btn-default" onclick="upObject()" lang="en">Object Up</button>
-        <button type="button" class="btn btn-default" onclick="addAnimation()" lang="en">Add Animation</button>
-        <button type="button" class="btn btn-default" onclick="stopAnimation()" lang="en">Stop Animation</button>
+        <button type="button" class="btn btn-default" onclick="stopAnimation()" lang="en">Stop All Animation</button>
         <button type="button" class="btn btn-default" onclick="downObject()"lang="en">Object Down</button>
         <button type="button" class="btn btn-default" onclick="createTextField()"lang="en">Create New Text Field</button>
         <input type = "color" id='text-color' onchange="changeColor(this.value)">
         <select id = 'setfontfamily'>
+            <option value="" disabled="disabled" selected="selected">Please select a font style</option>
             <option value = "arial black">arial black</option>
             <option value = "sans-serif">sans-serif</option>
             <option value = "monospace">monospace</option>
             <option value = "Comic Sans MS">Comic Sans MS</option>
             <option value = "BansheeStd">BansheeStd</option>
             <option value = "Agency FB">Agency FB</option>
+        </select>
+        <select id = 'setanimationtype'>
+            <option value="" disabled="disabled" selected="selected">Please select an animation type</option>
+            <option value = "sliding">Sliding animation</option>
+            <option value = "scale_sliding">Sliding with scaling animation</option>
+            <option value = "none">Off animation</option>
         </select>
     </div>
 {% endblock %}
