@@ -32,6 +32,8 @@ urlpatterns = [
     url(r'^rate$', 'postcard.views.rate'),
     url(r'^checkBadges$', 'postcard.views.checkbudges'),
     url(r'^tags/(?P<tag>\w+)/$', 'postcard.views.tag_view'),
-    url(r'^userRating$', 'postcard.views.user_rating')
+    url(r'^userRating$', 'postcard.views.user_rating'),
+    url(r'getUserInfo$','postcard.views.get_user_info'),
+    url(r'^update/(?P<field>\w+)/$', 'postcard.views.update_user_profile'),
 
 ]
