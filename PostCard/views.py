@@ -90,8 +90,6 @@ def getlist(request, num=-1):
     if request.is_ajax():
         if num == -1:
             tlist = Template.objects.all()
-            for item in tlist:
-                print(item.canvas_url)
             data = serializers.serialize("json", tlist)
         else:
             slist = PostCard.objects.all().order_by('-creation_date')

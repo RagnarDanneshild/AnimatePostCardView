@@ -39,7 +39,7 @@ function _base64ToArrayBuffer1(base64) {
 };
 function saveCanvas (canvas,callback) {
     //Get data from canvas
-    var jsn = canvas.toJSON(['selectable', 'evented']);
+    var jsn = canvas.toJSON(['selectable', 'evented','animationtype']);
     var canvasData = JSON.stringify(jsn);
     var jsondata = _base64ToArrayBuffer1(canvasData);
     client.writeFile('/Public/'+(new Date).getTime()+'.txt', jsondata, function(error, stat) {
