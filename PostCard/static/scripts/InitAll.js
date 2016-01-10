@@ -21,12 +21,21 @@ function moreData()
  $.get('/getListOfPicture/'+coff.toString(),function(data){
      populateContainer(data,"#imgContainer",'#previewImg','preview');
  });
-     coff=coff+4;
+     coff=coff+2;
  }
 
 function inittemplates()
 {
     $.get('/getListOfPicture/templates/',function(data){
         populateContainer(data,"#templateContainer",'#templateImg','templates');
+    });
+};
+
+function initTagView()
+{
+    $.get('/tags/'+window.location.pathname.split('/')[2],function(data){
+        var text = decodeURIComponent(window.location.pathname.split('/tags/'));
+         $('#tagName').text(decodeURIComponent(window.location.pathname.split('/tags/')))
+        populateContainer(data,"#TagImgContainer",'#previewImg','preview');
     });
 };

@@ -11,8 +11,10 @@ function getView(id,name,user,rating,viewtype) {
     }
     else if (viewtype=='searching'){
         return "<li>"+
-                "<a href='/postcard/"+id+"'>"+name+"</a>"+
+                "<a href='/postcard/"+id+"'>"+
                 "<img id = 'searchingImg"+id+"' src='/static/image/97.GIF' style='max-height: 100px; max-width: 100px;'/>"+
+                name+
+                "</a>"+
                 "</li>"
     }
     else if (usr == user && viewtype=='preview'){

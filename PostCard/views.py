@@ -37,10 +37,6 @@ def profile(request):
     )
 
 
-class edit(TemplateView):
-   template_name = 'edit.html'
-
-
 def save(request):
     if request.is_ajax():
         post_card = PostCard(user=request.user, canvas_url=request.POST['curl'], picture_url=request.POST['purl'], name=request.POST['name'], tags=request.POST.get('tags'))
@@ -92,7 +88,7 @@ def getlist(request, num=-1):
             tlist = Template.objects.all()
             data = serializers.serialize("json", tlist)
         else:
-            slist = PostCard.objects.all().order_by('-creation_date')
+            slist = PostCard.objects.all()
             if request.GET.get('user')==None:
                 data = serializers.serialize("json", slist[int(num): int(num)+2])
             else:
