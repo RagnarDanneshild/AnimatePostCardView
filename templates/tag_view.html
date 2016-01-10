@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {%  block content %}
+    <p class="brand"> PostCard by tag <span id="tagName"></span></p>
 <div id="TagImgContainer" class='View'>
 
 </div>
@@ -10,6 +11,7 @@
 {%  block scripts %}
 
     <script>
-    initTagView()
+    initTagView();
+    $('#tagName').text(window.location.pathname.split('/')[2])
     </script>
 {% endblock %}

@@ -16,29 +16,46 @@
 
 <body>
 
-    <div  class="imgView">
-    </div>
+
+
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
+
 
                 <a href="/" class="navbar-brand" lang="en">PostCard Editor</a>
-                <a href="#lang-en"class="navbar-brand" onclick="changeLanguage()" lang="en">Switch to Russia</a>
-                <a href="#" class="navbar-brand" onclick="changeTheme($('#theme').attr('href'))" lang="en">Change Theme</a>
+
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="{% url 'home' %}" lang="en">Home</a></li>
+                    <div class="dropdown">
+  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    Choose Language
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+    <li><a href="#lang-en" lang="en" onclick="changeLanguage('en')">English</a></li>
+    <li><a href="#lang-ru" lang="en" onclick="changeLanguage('ru')">Russian</a></li>
+
+  </ul>
+</div>
+
+                      <div class="dropdown">
+  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    Change Theme
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+    <li><a href="#lang-en" lang="en" onclick="changeTheme('style')">Theme1</a></li>
+    <li><a href="#lang-ru" lang="en" onclick="changeTheme('daytheme')">Theme2</a></li>
+
+  </ul>
+</div>
 
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     {%  if user.is_authenticated %}
-                        <li lang="en"><a href="{% url 'profile' %}" class="navbar-brand" >Hello {{ user.username }}!</a></li>
+                        <li lang="en"><a href="{% url 'profile' %}" class="navbar-brand" >Logged as {{ user.username }}!</a></li>
                         <li><a href="{% url 'logout' %}" lang="en">Logout</a></li>
                         <input id="username" type="hidden" value="{{user.id}}" />
                     {% else %}
@@ -111,16 +128,17 @@
     <script src="{% static 'scripts/ImgView.js' %}"></script>
     <script src="{% static 'scripts/Crsf_tokenSetup.js' %}"></script>
     <script src="{% static 'scripts/UserProfile.js' %}"></script>
-    <script src="{% static 'scripts/InitAll.js' %}"></script>
+    <script src="{% static 'scripts/IniView.js' %}"></script>
     <script src="{% static 'scripts/InfinityScroll.js' %}"></script>
     <script src="{% static 'scripts/TemplateCreation.js' %}"></script>
     <script src="{% static 'scripts/rating.js' %}"></script>
     <script src="{% static 'scripts/badges.js' %}"></script>
     <script src="{% static 'scripts/tagview.js' %}"></script>
-    <script src="{% static 'scripts/searching.js' %}"></script>
+    <script src="{% static 'scripts/InitTemplates.js' %}"></script>
+    <script src="{% static 'scripts/profileEdit.js' %}"></script>
 
 <script type="text/javascript">
-    // Create language switcher instance
+
     var lang = new Lang();
        lang.dynamic('ru', '{% static 'language/russian.json' %}');
     lang.init({
@@ -128,21 +146,21 @@
     });
 
 
-    function changeLanguage(){
-        if(lang.currentLang=='ru')
+    function changeLanguage(language){
+        if(language=='en')
         window.lang.change('en');
-        else
+        else if(language=='ru')
         window.lang.change('ru');
         return false;
     }
 
     function changeTheme(current){
-        if(current.split('/')[3]=='style.css'){
+        if(current=='style'){
             Cookies.set('theme','day');
 
         $('#theme').attr('href', '{% static 'content/daytheme.css' %}');
         }
-        else{
+        else if(current=='daytheme'){
         $('#theme').attr('href', '{% static 'content/style.css' %}');
           Cookies.set('theme','night');}
 
