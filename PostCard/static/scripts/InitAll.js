@@ -12,7 +12,7 @@ function initGallery()
 function initUserCard()
 {
     $.get('/getListOfPicture/4',{user:true},function(data){
-        populateContainer(data,"#UserimgContainer",'#previewImg','preview');
+        populateContainer(data,"#UserimgContainer",'#previewImg','pofileview');
     });
 };
 

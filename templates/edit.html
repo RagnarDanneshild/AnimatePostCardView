@@ -17,7 +17,7 @@
     <div class='container' id = 'mainblock'>
         <canvas width="100" height="100" id = "first" style="border: 1px solid; position:absolute;"></canvas>
         <button type="button" class="btn btn-default" onclick="upObject()" lang="en">Object Up</button>
-        <button type="button" class="btn btn-default" onclick="stopAnimation()" lang="en">Stop All Animation</button>
+
         <button type="button" class="btn btn-default" onclick="downObject()"lang="en">Object Down</button>
         <button type="button" class="btn btn-default" onclick="createTextField()"lang="en">Create New Text Field</button>
         <input type = "color" id='text-color' onchange="changeColor(this.value)">
@@ -36,6 +36,7 @@
             <option value = "scale_sliding">Sliding with scaling animation</option>
             <option value = "none">Off animation</option>
         </select>
+    <button type="button" class="btn btn-default" onclick="stopAnimation()" lang="en">Stop All Animation</button>
     </div>
 {% endblock %}
 
