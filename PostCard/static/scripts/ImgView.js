@@ -31,10 +31,24 @@ function getView(id,name,user,rating,viewtype) {
             "<img id='previewImg"+id+"' src='/static/image/97.GIF'/>"+
             "</div>"
     }
+    else if(usr == user && viewtype=='pofileview') {
+        return "<div class='imgView' id='" + id + "'>" +
+            "<a href='/postcard/" + id + "'>" + name + "   </a>" + "<span ><a  href='/edit/" + id + "' lang='en'><i class='fa fa-pencil-square-o'></i></a></span>" +
+            "<span class = 'delete' id = '"+id+"' >Delete</span>"+
+            "<div class='infoLine'><span id='toggle' class='fa fa-camera'></span> <span  class='badge' lang='en'> Rating "+ rating+" </span></div>"+
+            "<img id='previewImg"+id+"' src='/static/image/97.GIF'/>"+
+            "</div>"
+    }
 }
 
 $("#templateContainer").on("click",".templateView",function(){
     window.location = "/createnew/"+$(this).attr('id');
+});
+$("#UserimgContainer").on("click",".delete",function(){
+     var result = confirm('Are you sure? This postcard will be deleted!');
+    if (result){
+        window.location = "/delete/"+$(this).attr('id');
+    }
 });
 
 $('#search-form').on('submit', function(event){

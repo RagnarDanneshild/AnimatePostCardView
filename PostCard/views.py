@@ -51,6 +51,14 @@ def save(request):
     return HttpResponse('it s ok')
 
 
+def deletepostcard(request, id):
+    if PostCard.objects.filter(id=id).exists():
+        postcardfordelete = PostCard.objects.get(id=id)
+        if request.user == postcardfordelete.user:
+            postcardfordelete.delete()
+        return render(request, 'profile.html')
+
+
 
 def savetemplate(request):
     if request.is_ajax():
@@ -72,14 +80,6 @@ def edit(request, templnum='', id=0):
             return HttpResponse(s, content_type='application/json')
         else:
             return render(request, 'edit.html')
-
-
-def save_post_card(request):
-    if request.is_ajax():
-        post_card = PostCard(user=request.user, canvas=request.POST['json'], picture_url=request.POST['url'])
-        post_card.save()
-
-    return HttpResponse('it s ok')
 
 
 def getlist(request, num=-1):

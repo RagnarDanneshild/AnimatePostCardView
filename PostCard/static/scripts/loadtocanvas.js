@@ -4,6 +4,10 @@
 function loadAllToCanvas(canvas,isselectable){
     if (canvas){
         $.get(window.location.pathname, function (data) {
+        if(data[0].fields.user && isselectable){
+            var postCardName = document.getElementById('postCardName');
+            postCardName.setAttribute('value',data[0].fields.name);
+        }
         getImage1(data[0].fields.canvas_url, function (jsoncanvas) {
             var tempForAnimationObject = [];
             canvas.loadFromJSON(JSON.parse(jsoncanvas), function () {afterCanvasLoad(canvas, tempForAnimationObject);},
