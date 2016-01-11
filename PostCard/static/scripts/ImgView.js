@@ -47,7 +47,21 @@ $("#templateContainer").on("click",".templateView",function(){
 $("#UserimgContainer").on("click",".delete",function(){
      var result = confirm('Are you sure? This postcard will be deleted!');
     if (result){
-        window.location = "/delete/"+$(this).attr('id');
+        $.ajax({
+            url : "/delete/", // the endpoint
+            type : "POST", // http method
+            data : { id : $(this).attr('id') }, // data sent with the post request
+            success : function(deleteresult) {
+                deletePostcardFiles(deleteresult);
+                alert('Deleted');
+                window.location = "/profile/";
+            },
+            error : function(xhr,errmsg,err) {
+                $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                    " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+                console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+            }
+        });
     }
 });
 

@@ -51,13 +51,14 @@ def save(request):
     return HttpResponse('it s ok')
 
 
-def deletepostcard(request, id):
-    if PostCard.objects.filter(id=id).exists():
-        postcardfordelete = PostCard.objects.get(id=id)
-        if request.user == postcardfordelete.user:
-            postcardfordelete.delete()
-        return render(request, 'profile.html')
-
+def deletepostcard(request):
+    if request.is_ajax:
+        if PostCard.objects.filter(id=request.POST.get('id')).exists():
+            postcardfordelete = PostCard.objects.get(id=request.POST.get('id'))
+            if request.user == postcardfordelete.user:
+                deletedobject = serializers.serialize('json', PostCard.objects.filter(id=request.POST.get('id')))
+                postcardfordelete.delete()
+                return HttpResponse(deletedobject, content_type='application/json')
 
 
 def savetemplate(request):

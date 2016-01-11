@@ -66,3 +66,7 @@ function getImage1(path,callback){
     });
 
 }
+function deletePostcardFiles(postcard){
+    client.remove(postcard[0].fields.picture_url);
+    client.remove(postcard[0].fields.canvas_url);
+}
